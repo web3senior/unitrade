@@ -1,0 +1,36 @@
+.formGroup {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  display: flex;
+}
+
+.action {
+  small {
+    font-weight: 500;
+  }
+
+  button {
+    border: none;
+    width: 100%;
+    border-radius: var(--global-border-radius);
+    color: currentColor;
+    font-weight: 500;
+    font-size: 1rem;
+    background-color: rgba(#fff, 0.5);
+    padding: 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}

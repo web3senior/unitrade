@@ -1,0 +1,450 @@
+import { useEffect, useState, Suspense, useRef } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import ABI from './../abi/unitrade.json'
+import LSP8ABI from './../abi/lsp8.json'
+import LSP7ABI from './../abi/lsp7.json'
+import { useAuth, provider } from './../contexts/AuthContext'
+import Web3 from 'web3'
+import styles from './Admin.module.scss'
+import { useLocation } from 'react-router'
+
+const web3 = new Web3(window.lukso)
+const contract = new web3.eth.Contract(ABI, import.meta.env.VITE_CONTRACT)
+const _ = web3.utils
+
+function Admin() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [listedTokens, setListedTokens] = useState([])
+
+  const auth = useAuth()
+  const frmListRef = useRef()
+  const location = useLocation()
+
+  const fetchData = async (dataURL) => {
+    let requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    }
+    const response = await fetch(`${dataURL}`, requestOptions)
+    if (!response.ok) throw new Response('Failed to get data', { status: 500 })
+    return response.json()
+  }
+
+  const getListingPool = async (_collection, _tokenId) => await contract.methods.listingPool(_collection, _tokenId).call()
+  const getListedTokens = async () => await contract.methods.getListedTokens(`0x188eeC07287D876a23565c3c568cbE0bb1984b83`).call()
+  const getTradePoolfunc = async (_collection, _tokenId) => await contract.methods.getTradePool(_collection, _tokenId).call()
+
+  const getTokenData = async (_collection, _tokenId) => {
+    const contractLSP8 = new web3.eth.Contract(LSP8ABI, _collection)
+    return await contractLSP8.methods.getDataForTokenId(`${_tokenId}`, '0x9afb95cacc9f95858ec44aa8c3b685511002e30ae54415823f406128b85b238e').call()
+  }
+
+  async function get_lsp7(contract) {
+    console.log(contract)
+    let myHeaders = new Headers()
+    myHeaders.append('Content-Type', `application/json`)
+    myHeaders.append('Accept', `application/json`)
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify({
+        query: `query MyQuery {
+    Asset(where: {id: {_eq: "${contract.toLowerCase()}"}}) {
+      id
+      isLSP7
+      lsp4TokenName
+      lsp4TokenSymbol
+      lsp4TokenType
+      name
+      totalSupply
+      owner_id
+    }
+  }`,
+      }),
+    }
+
+    const response = await fetch(`${import.meta.env.VITE_LUKSO_API_ENDPOINT}`, requestOptions)
+    if (!response.ok) {
+      return { result: false, message: `Failed to fetch query` }
+    }
+    const data = await response.json()
+    return data
+  }
+
+  const listToken = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    const t = toast.loading(`Waiting for transaction's confirmation`)
+
+    const formData = new FormData(e.target)
+    const collection = formData.get('collection')
+    const tokenId = formData.get('tokenId')
+    const token = formData.get('token')
+    const price = formData.get('price')
+    const referralFee = formData.get('referralFee')
+
+    try {
+      window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+        // Approve tokenId
+        const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection)
+
+        contractLSP8.methods
+          .authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x')
+          .send({ from: accounts[0] })
+          .then((res) => {
+            console.log(`authorizeOperator result =>`, res)
+
+            // List token
+            contract.methods
+              .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
+              .send({
+                from: accounts[0],
+              })
+              .then((res) => {
+                console.log(res) //res.events.tokenId
+
+                setIsLoading(true)
+
+                toast.success(`Done`)
+                toast.dismiss(t)
+              })
+              .catch((error) => {
+                toast.dismiss(t)
+              })
+          })
+          .catch((error) => {
+            console.log(`authorizeOperator error =>`, error)
+            toast.dismiss(t)
+          })
+      })
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(t)
+    }
+  }
+
+  const cancelListing = async (e, item) => {
+    console.log(item)
+
+    const t = toast.loading(`Waiting for transaction's confirmation`)
+
+    try {
+      window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+        // Cancel listing
+        contract.methods
+          .cancelListing(item.collection, item.tokenId)
+          .send({
+            from: accounts[0],
+          })
+          .then((res) => {
+            console.log(res) //res.events.tokenId
+
+            setIsLoading(true)
+
+            toast.success(`Done`)
+            toast.dismiss(t)
+          })
+          .catch((error) => {
+            toast.dismiss(t)
+          })
+      })
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(t)
+    }
+  }
+
+  const updateEmoji = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    const t = toast.loading(`Waiting for transaction's confirmation`)
+
+    const formData = new FormData(e.target)
+    const emojiId = formData.get('emojiId')
+    const metadata = formData.get('metadata')
+    const name = formData.get('name')
+    const emoji = formData.get('emoji')
+    const price = formData.get('price')
+    const status = formData.get('status')
+
+    try {
+      window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+        contract.methods
+          .updateEmoji(emojiId, metadata, name, emoji, _.toWei(price, `ether`), String(status).toLowerCase() === 'true')
+          .send({
+            from: accounts[0],
+          })
+          .then((res) => {
+            console.log(res) //res.events.tokenId
+
+            setIsLoading(true)
+
+            toast.success(`Done`)
+
+            toast.dismiss(t)
+          })
+          .catch((error) => {
+            toast.dismiss(t)
+          })
+      })
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(t)
+    }
+  }
+
+  const handleForm = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    const formData = new FormData(e.target)
+    const phone = formData.get('phone')
+    const password = formData.get('password')
+    const errors = {}
+
+    // validate the fields
+    if (phone.length < 11) {
+      errors.phone = 'err'
+      toast(errors.phone, 'error')
+    }
+
+    if (typeof password !== 'string' || password.length < 4) {
+      errors.password = 'err'
+      toast(errors.password, 'error')
+    }
+    // // return data if we have errors
+    // if (Object.keys(errors).length) {
+    //   return errors
+    // }
+
+    const post = {
+      phone: phone,
+      password: password,
+    }
+
+    try {
+      const res = await signUp(post)
+      console.log(res)
+      if (res.result) {
+        localStorage.setItem('token', JSON.stringify(res.token))
+        toast(`signed in successfuly`, `success`)
+        router.push('/user/dashboard')
+      } else {
+        toast(`${res.message}`, `error`)
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
+    return null
+  }
+  const updateItem = (e, info) => {
+    document.querySelector(`[name="collection"]`).value = info.collection
+    document.querySelector(`[name="tokenId"]`).value = info.tokenId
+    document.querySelector(`[name="price"]`).value = _.fromWei(info.price, `ether`)
+    document.querySelector(`[name="referralFee"]`).value = info.referralFee
+     document.querySelector(`[name="token"]`).value = info.token
+  }
+    const copyEmbedLink = (e, info) => {
+      console.log(`${window.location.host}?collection=${info.collection}&token_id=${info.tokenId}`)
+      navigator.clipboard.writeText(`https://${window.location.host}?collection=${info.collection}&token_id=${info.tokenId}`).then(
+        () => {
+          /* clipboard successfully set */
+          toast(`Copied`)
+        },
+        () => {
+          /* clipboard write failed */
+          toast(`Error`)
+        },
+      );
+  }
+  useEffect(() => {
+
+ 
+
+    getListedTokens().then((res) => {
+      console.log(res)
+
+      res.data.map((item, i) => {
+
+   
+        getTradePoolfunc(item['collection'], item['tokenId']).then(res=>{
+          console.log(res)
+        })
+
+        getTokenData(item[0], item[1]).then((data) => {
+          try {
+            // console.log(data)
+            if (_.isHex(data)) {
+              data = web3.utils.hexToAscii(data)
+              data = data.slice(data.search(`data:application/json;`), data.length)
+
+              // Read the data url
+              fetchData(data).then((dataContent) => {
+                dataContent.info = item
+                console.log(dataContent)
+
+                // get token data
+                if (item[2].toString() !== `0x0000000000000000000000000000000000000000`) {
+                  get_lsp7(item[2]).then((result) => {
+                    dataContent.tokenInfo = result
+
+                    getListingPool(item[0], item[1]).then((result) => {
+                      dataContent.market = result
+                      setListedTokens((token) => token.concat(dataContent))
+                    })
+                  })
+                } else {
+                  getListingPool(item[0], item[1]).then((result) => {
+                    dataContent.market = result
+                    setListedTokens((token) => token.concat(dataContent))
+                  })
+                }
+              })
+            } else {
+              setListedTokens((token) => [{ info: item }])
+            }
+          } catch (error) {
+            console.log(error)
+          }
+        })
+      })
+
+      //  setListedTokens(res.data)
+      //
+    })
+  }, [])
+
+  return (
+    <div className={`${styles.page} ms-motion-slideDownIn`}>
+      <Toaster />
+      <div className={`__container`} data-width={`xlarge`}>
+        <div className="card">
+          <div className="card__header d-flex align-items-center justify-content-between">Listed tokens</div>
+          <div className="card__body">
+            {/* {errors?.email && <span>{errors.email}</span>} */}
+
+            {listedTokens.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Token Id</th>
+                    <th>Price</th>
+                    <th>Refrral Fee</th>
+                    <th>Referral</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listedTokens.map((item, i) => {
+                    return (
+                      <tr key={i} className={`animate__animated animate__fadeInUp`} style={{ animationDelay: `${i / 10}s`, '--animate-duration': `400ms` }}>
+                        <td className={`d-flex align-items-center`} style={{ columnGap: `1rem` }}>
+                          {item.LSP4Metadata.images.length > 0 && (
+                            <>
+                              {item.LSP4Metadata.images.length > 0 ? (
+                                <img
+                                  className={`rounded ms-depth-16`}
+                                  style={{ width: `48px` }}
+                                  src={`${
+                                    item.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 ? import.meta.env.VITE_IPFS_GATEWAY + item.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '') : item.LSP4Metadata.images[0][0].url
+                                  }`}
+                                />
+                              ) : (
+                                <img className={`rounded ms-depth-16`} alt={``} title={``} src={`${import.meta.env.VITE_IPFS_GATEWAY + `bafkreif5hdukwj7hnuxc5o53bjfkd3im4d7ygeah4a77i5ut5ke3zyj4lu`}`} />
+                              )}
+                            </>
+                          )}
+                          <span className={`badge badge-dark`}>
+                            {item['info'].tokenId.slice(0, 6)}...{item['info'].tokenId.slice(62)}
+                          </span>
+                        </td>
+                        <td>
+                          {_.fromWei(item['info'].price, `ether`)}
+                          {item['info'].token === `0x0000000000000000000000000000000000000000` ? <>⏣LYX</> : <span className={`badge badge-pill badge-primary ml-10`}> ${item['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}
+                        </td>
+                        <td>
+                          {item['info'].referralFee} %
+                        </td>
+                        <td>
+                          {item['market'].referral} %
+                        </td>
+                        <td>
+                          {item['info'].status ? <span className={`badge badge-success`}>Listed</span> : <span className={`badge badge--danger`}>Canceled/ Sold out</span>}
+                          <br />
+                          {item['market'].status ? <span className={`badge badge-success`}>In market</span> : <span className={`badge badge--danger`}>Sold out</span>}
+                        </td>
+
+                        <td className={`d-flex flex-column grid--gap-025`}>
+                          <button className={`btn`} onClick={(e) => cancelListing(e, item['info'])}>
+                            Delete
+                          </button>
+                          <button className={`btn`} style={{ background: `orange` }} onClick={(e) => updateItem(e, item['info'])}>
+                            Update
+                          </button>
+                          <button className={`btn`} style={{ background: `royalblue` }} onClick={(e)=>copyEmbedLink(e, item['info'])}>
+                            Copy Embed Link
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <>Not found any listed tokens.</>
+            )}
+          </div>
+        </div>
+
+        <div className={`grid grid--fit grid--gap-1 w-100`} style={{ '--data-width': `300px` }}>
+          <div className="card">
+            <div className="card__header d-flex align-items-center justify-content-between">List Token & Update</div>
+            <div className="card__body">
+              {/* {errors?.email && <span>{errors.email}</span>} */}
+              <form ref={frmListRef} onSubmit={(e) => listToken(e)} className={`form d-flex flex-column`} style={{ rowGap: '1rem' }}>
+                <div>
+                  <label htmlFor="">Collection:</label>
+                  <input type="text" name="collection" placeholder="Collection contract address" />
+                </div>
+
+                <div>
+                  <label htmlFor="">Token id:</label>
+                  <input type="text" name="tokenId" placeholder="Token Id" required />
+                </div>
+
+                <div>
+                  Purchase Token:
+                  <select name="token" id="">
+                    <option value="0x0000000000000000000000000000000000000000">⏣LYX</option>
+                    <option value="0x39F73B9C8D4E370fD9ff22C932eD58009680aff0">$PEPITO</option>
+                  </select>
+                </div>
+
+                <div>
+                  Price:
+                  <input type="text" name="price" placeholder="Price" required />
+                </div>
+
+                <div>
+                  Referral fee:
+                  <input type="text" name="referralFee" placeholder="Price" defaultValue={0} required />
+                </div>
+
+                <button className="mt-20 btn" type="submit">
+                  Approve & List
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Admin

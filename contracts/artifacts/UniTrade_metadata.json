@@ -1,0 +1,1236 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "EnforcedPause",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "ExpectedPause",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "InsufficientBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "totalAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "authorizedAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "NotAuthorizedAmount",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					}
+				],
+				"name": "NotOperator",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "OwnableInvalidOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "OwnableUnauthorizedAccount",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "Unauthorized",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dt",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					}
+				],
+				"name": "CancelListing",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "FeeUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dt",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					}
+				],
+				"name": "NewTokenListed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "Paused",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "referral",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "referralFee",
+						"type": "uint8"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dt",
+						"type": "uint256"
+					}
+				],
+				"name": "SoldOut",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "Unpaused",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "_tradeCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "_referral",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "_force",
+						"type": "bool"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "buy",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "calcFee",
+				"outputs": [
+					{
+						"internalType": "uint256[3]",
+						"name": "",
+						"type": "uint256[3]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_bps",
+						"type": "uint256"
+					}
+				],
+				"name": "calcPercentage",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "cancelListing",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "fee",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_seller",
+						"type": "address"
+					}
+				],
+				"name": "getListedTokens",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "len",
+						"type": "uint256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "collection",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "tokenId",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "address",
+								"name": "token",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint8",
+								"name": "referralFee",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dt",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "status",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct UniTrade.UserListingStruct[]",
+						"name": "data",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "getTradePool",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "collection",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "tokenId",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "address",
+								"name": "token",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "from",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "to",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "referral",
+								"type": "address"
+							},
+							{
+								"internalType": "uint8",
+								"name": "referralFee",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "dt",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct UniTrade.TradeStruct[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_referralFee",
+						"type": "uint8"
+					}
+				],
+				"name": "list",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "listingPool",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "referralFee",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "paused",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "tradePool",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "referral",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "referralFee",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dt",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bool",
+						"name": "_force",
+						"type": "bool"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "transferToken",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unpause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "_fee",
+						"type": "uint8"
+					}
+				],
+				"name": "updateFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "userListingPool",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "referralFee",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "_force",
+						"type": "bool"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "withdrawToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Aratta Labs",
+			"custom:emoji": "💸",
+			"custom:security-contact": "atenyun@gmail.com",
+			"details": "You will find the deployed contract addresses in the repo",
+			"errors": {
+				"EnforcedPause()": [
+					{
+						"details": "The operation failed because the contract is paused."
+					}
+				],
+				"ExpectedPause()": [
+					{
+						"details": "The operation failed because the contract is not paused."
+					}
+				],
+				"OwnableInvalidOwner(address)": [
+					{
+						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
+					}
+				],
+				"OwnableUnauthorizedAccount(address)": [
+					{
+						"details": "The caller account is not authorized to perform an operation."
+					}
+				]
+			},
+			"events": {
+				"Paused(address)": {
+					"details": "Emitted when the pause is triggered by `account`."
+				},
+				"Unpaused(address)": {
+					"details": "Emitted when the pause is lifted by `account`."
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"calcPercentage(uint256,uint256)": {
+					"params": {
+						"_amount": "The total amount",
+						"_bps": "The precentage"
+					},
+					"returns": {
+						"_0": "percentage %"
+					}
+				},
+				"cancelListing(address,bytes32)": {
+					"details": "Cancel means reset the all values, 0",
+					"params": {
+						"_collection": "Collection contract",
+						"_tokenId": "Token Id in bytes32"
+					},
+					"returns": {
+						"_0": "bool"
+					}
+				},
+				"list(address,bytes32,address,uint256,uint8)": {
+					"details": "Relisting the token causes update only the fields"
+				},
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"paused()": {
+					"details": "Returns true if the contract is paused, and false otherwise."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				},
+				"updateFee(uint8)": {
+					"details": "Fee can be 0-100",
+					"params": {
+						"_fee": "new value"
+					}
+				}
+			},
+			"title": "UniTrade",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"buy(address,bytes32,address,bool,bytes)": {
+					"notice": "buy"
+				},
+				"calcFee(address,bytes32)": {
+					"notice": "Calculate fees"
+				},
+				"calcPercentage(uint256,uint256)": {
+					"notice": "calcPercentage percentage"
+				},
+				"cancelListing(address,bytes32)": {
+					"notice": "Cancel listing"
+				},
+				"getBalance()": {
+					"notice": "Return the balance of this contract"
+				},
+				"list(address,bytes32,address,uint256,uint8)": {
+					"notice": "Donate"
+				},
+				"pause()": {
+					"notice": "Pause mint"
+				},
+				"transferBalance(address,uint256)": {
+					"notice": "Transfer balance from this contract to input address"
+				},
+				"unpause()": {
+					"notice": "Unpause mint"
+				},
+				"updateFee(uint8)": {
+					"notice": "Update fee"
+				},
+				"withdraw()": {
+					"notice": "Withdraw the balance from this contract to the owner's address"
+				},
+				"withdrawToken(address,address,uint256,bool,bytes)": {
+					"notice": "Withdraw LSP7 token"
+				}
+			},
+			"notice": "UniTrade",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"UniTrade.sol": "UniTrade"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@erc725/smart-contracts/contracts/interfaces/IERC725Y.sol": {
+			"keccak256": "0xa47c9e3eba0c733a1685b9fa309f753540c89ad2dca73236a2c953e7f5680e7b",
+			"license": "CC0-1.0",
+			"urls": [
+				"bzz-raw://59076395f660838919a2068cb7792c0fa70533642bbc5b4e3cc3cbb2c9ec7b50",
+				"dweb:/ipfs/QmQqew3mDuyHCBdd4v1JiwRiKEbzk3LeHchzTHSdyhYg5b"
+			]
+		},
+		"@lukso/lsp-smart-contracts/contracts/LSP7DigitalAsset/ILSP7DigitalAsset.sol": {
+			"keccak256": "0x1500da59b41e37677458dcc3652bb5a72f58a7920dbc41f6cf60f7beadd6731d",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://e5bd2b8d469213eae3cd7013dc05b4c37ec183977dddb2b659ab8f9b852d7b26",
+				"dweb:/ipfs/QmbNt4JEugWbRRCAge1HCM2j4HExEZzGRsgDmiATZoYvp6"
+			]
+		},
+		"@lukso/lsp-smart-contracts/contracts/LSP8IdentifiableDigitalAsset/ILSP8IdentifiableDigitalAsset.sol": {
+			"keccak256": "0xf24c0f30ffdc2540755ae809effdba80029f8418e2b0c9f72b878aad50ba1b72",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://599f63e424232f92d566b3294729d24b3e06e33a7b721590600e721a728919e4",
+				"dweb:/ipfs/QmW4DX8gxXpPGrZdEk2iwQJMHyVgBaEwbb3QZkLyowMCCD"
+			]
+		},
+		"@lukso/lsp4-contracts/contracts/LSP4Constants.sol": {
+			"keccak256": "0xdf9b7c688d39a92cb3238136a9f56554245d5ae9b6568dcd6164d0e15c6f56c7",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://bb36a427cdfa0f394d2d78014f85152ab383499fc3c3d6285d4b801c656e7c3f",
+				"dweb:/ipfs/QmZJehfeWKfHLyZLufhs9u4ZyVztGCUNWXzFgfZSU837vU"
+			]
+		},
+		"@lukso/lsp7-contracts/contracts/ILSP7DigitalAsset.sol": {
+			"keccak256": "0xe809a376f430ba79bf7554b3274617103f1d0434546b2d4fe68019e3079a53d0",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://f955f4d89c5a99f791af4a3fc7201ba0299627fca221d97a66a562eeb4860c04",
+				"dweb:/ipfs/QmcAqBHYFwk6VXevUeSjefFag6EhndrXQP1D4tGjxtgUMT"
+			]
+		},
+		"@lukso/lsp8-contracts/contracts/ILSP8IdentifiableDigitalAsset.sol": {
+			"keccak256": "0x16dccaeb35168c4e61763a2c35b075eeed7505661b10fc9c16194af6eb3751ad",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://48f03e83068c241fb7f380b8ad31c8aa3c0f3de59df6ff4c4881b2589d7610b7",
+				"dweb:/ipfs/QmW1wmc6kkUXF9gMdAwX7GxjrF4mLqUd7dognerLVRod4v"
+			]
+		},
+		"@openzeppelin/contracts/utils/Base64.sol": {
+			"keccak256": "0x822fe67e9e671773d29c8182e7287b42edf5f575eab1eb98558d5ccbdff61c96",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7ce73cb57d5a2e705a0a65cac2ed73ab2fa91932e8af22b7ec1a6a3d88f28669",
+				"dweb:/ipfs/QmcbjWFekUTsNeoFwGgUT4xtXoVzsA38ca9pkC4jxvxy7L"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0xa92e4fa126feb6907daa0513ddd816b2eb91f30a808de54f63c17d0e162c3439",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a367861093b74443b137564d3f3c472f70bcf114739e62059c939f25e315706c",
+				"dweb:/ipfs/Qmd7JMpcxD9RuQjK3uM3EzJUgSqdN8vzp8eytEiuwxQJ6h"
+			]
+		},
+		"@openzeppelin/contracts/utils/Counters.sol": {
+			"keccak256": "0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://59e1c62884d55b70f3ae5432b44bb3166ad71ae3acd19c57ab6ddc3c87c325ee",
+				"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu"
+			]
+		},
+		"@openzeppelin/contracts/utils/Strings.sol": {
+			"keccak256": "0x3088eb2868e8d13d89d16670b5f8612c4ab9ff8956272837d8e90106c59c14a0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b81d9ff6559ea5c47fc573e17ece6d9ba5d6839e213e6ebc3b4c5c8fe4199d7f",
+				"dweb:/ipfs/QmPCW1bFisUzJkyjroY3yipwfism9RRCigCcK1hbXtVM8n"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f",
+				"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xe4455ac1eb7fc497bb7402579e7b4d64d928b846fce7d2b6fde06d366f21c2b3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cc8841b3cd48ad125e2f46323c8bad3aa0e88e399ec62acb9e57efa7e7c8058c",
+				"dweb:/ipfs/QmSqE4mXHA2BXW58deDbXE8MTcsL5JSKNDbm23sVQxRLPS"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/SignedMath.sol": {
+			"keccak256": "0xf92515413956f529d95977adc9b0567d583c6203fc31ab1c23824c35187e3ddc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c50fcc459e49a9858b6d8ad5f911295cb7c9ab57567845a250bf0153f84a95c7",
+				"dweb:/ipfs/QmcEW85JRzvDkQggxiBBLVAasXWdkhEysqypj9EaB6H2g6"
+			]
+		},
+		"UniTrade.sol": {
+			"keccak256": "0x59ed3268ef1bb64245b1d43091841bda66062744c0f10620d0a15bb60a1abe25",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://dc0e00c86e69096f42ceee5406f8143ef766a250e1793320762532c2d2c01465",
+				"dweb:/ipfs/QmWhP4ggQZXBmXgYFjuQFm5jXdiYLTdAMhqeqgm39u8jYV"
+			]
+		},
+		"_errors.sol": {
+			"keccak256": "0xa1de8bc66c938490a5f6da8fb8c0496193af3ebe1562cf3c452bdb382ea53f02",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://85c71558dc82970cd5bbaa8ed267e65232d2e0dd5c8b5a6e1245d8c1b60df2ec",
+				"dweb:/ipfs/QmVuScyPL1JG9CSK78zvGvJAyCtsDfigStRoqDX61hCh2A"
+			]
+		},
+		"_events.sol": {
+			"keccak256": "0x39a195b2880e63fef99b7efd8a9e74e5954255c78b4a1117365fb97064634bfc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f686e3f59faf06451a745caad195352c7f7d4bf2aa34a6f82453fe65de1c3f77",
+				"dweb:/ipfs/QmU8vF2aaYRBzYKzgkrC2puvXRg57Vr6x3TJfYv3cSNoP2"
+			]
+		},
+		"_ownable.sol": {
+			"keccak256": "0xd0eb4b66f1088976a798a35ea6f276723448d778c424898ed9a3895dd16e0395",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d7ff7967a53aa14549700c15740d8afa60437287dfbdd386fa338001156afcfd",
+				"dweb:/ipfs/QmNqebzo3Jex1uFWNTRh3p185YkVZtt28Rsv1mB2nfBWBw"
+			]
+		},
+		"_pausable.sol": {
+			"keccak256": "0xbcfe48dd83c79dc58f3e692bf0c564ca9732a9782290fbc463b51866075fda5e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ef18a3571179803f34e036529e8e0249a24aa86f315a6425bff7a12e08a2466a",
+				"dweb:/ipfs/QmPcB7VKFa6S4Me9a7cxa8ukA5HZfr86uDyDeDrjJqetqe"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,1955 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "ERC725Y_DataKeysValuesEmptyArray",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "ERC725Y_DataKeysValuesLengthMismatch",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "ERC725Y_MsgValueDisallowed",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "storedData",
+						"type": "bytes"
+					}
+				],
+				"name": "InvalidExtensionAddress",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "InvalidFunctionSelector",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP4TokenNameNotEditable",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP4TokenSymbolNotEditable",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP4TokenTypeNotEditable",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "callIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "LSP8BatchCallFailed",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8CannotSendToAddressZero",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8CannotUseAddressZeroAsOperator",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8InvalidTransferBatch",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "LSP8NonExistentTokenId",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "LSP8NonExistingOperator",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "LSP8NotTokenOperator",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "LSP8NotTokenOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenReceiver",
+						"type": "address"
+					}
+				],
+				"name": "LSP8NotifyTokenReceiverContractMissingLSP1Interface",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenReceiver",
+						"type": "address"
+					}
+				],
+				"name": "LSP8NotifyTokenReceiverIsEOA",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "LSP8OperatorAlreadyAuthorized",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "LSP8RevokeOperatorNotAuthorized",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8TokenContractCannotHoldValue",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "LSP8TokenIdAlreadyMinted",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8TokenIdFormatNotEditable",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8TokenIdsDataEmptyArray",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8TokenIdsDataLengthMismatch",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "LSP8TokenOwnerCannotBeOperator",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "oldOwner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "LSP8TokenOwnerChanged",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "functionSelector",
+						"type": "bytes4"
+					}
+				],
+				"name": "NoExtensionFoundForFunctionSelector",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "callerAddress",
+						"type": "address"
+					}
+				],
+				"name": "OwnableCallerNotTheOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "OwnableCannotSetZeroAddressAsOwner",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "dataKey",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "dataValue",
+						"type": "bytes"
+					}
+				],
+				"name": "DataChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "operatorNotificationData",
+						"type": "bytes"
+					}
+				],
+				"name": "OperatorAuthorizationChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "notified",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "operatorNotificationData",
+						"type": "bytes"
+					}
+				],
+				"name": "OperatorRevoked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "dataKey",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "dataValue",
+						"type": "bytes"
+					}
+				],
+				"name": "TokenIdDataChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "force",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"inputs": [],
+				"name": "MAX_SUPPLY",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_tokenIdCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes",
+						"name": "operatorNotificationData",
+						"type": "bytes"
+					}
+				],
+				"name": "authorizeOperator",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "data",
+						"type": "bytes[]"
+					}
+				],
+				"name": "batchCalls",
+				"outputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "results",
+						"type": "bytes[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "bps",
+						"type": "uint256"
+					}
+				],
+				"name": "calcPercentage",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "councilMintExpiration",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "dataKey",
+						"type": "bytes32"
+					}
+				],
+				"name": "getData",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "dataValue",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "dataKeys",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "getDataBatch",
+				"outputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "dataValues",
+						"type": "bytes[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "tokenIds",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "dataKeys",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "getDataBatchForTokenIds",
+				"outputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "dataValues",
+						"type": "bytes[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "dataKey",
+						"type": "bytes32"
+					}
+				],
+				"name": "getDataForTokenId",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "dataValue",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getMetadata",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "getOperatorsOf",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "isOperatorFor",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "mintPool",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "referral",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "mintmint",
+				"outputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "tokenId",
+						"type": "bytes32[]"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "pepito_vault",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "price",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rawMetadata",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bool",
+						"name": "notify",
+						"type": "bool"
+					},
+					{
+						"internalType": "bytes",
+						"name": "operatorNotificationData",
+						"type": "bytes"
+					}
+				],
+				"name": "revokeOperator",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "dataKey",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes",
+						"name": "dataValue",
+						"type": "bytes"
+					}
+				],
+				"name": "setData",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "dataKeys",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bytes[]",
+						"name": "dataValues",
+						"type": "bytes[]"
+					}
+				],
+				"name": "setDataBatch",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "tokenIds",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "dataKeys",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bytes[]",
+						"name": "dataValues",
+						"type": "bytes[]"
+					}
+				],
+				"name": "setDataBatchForTokenIds",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "dataKey",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes",
+						"name": "dataValue",
+						"type": "bytes"
+					}
+				],
+				"name": "setDataForTokenId",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "team",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "teamMintCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					}
+				],
+				"name": "tokenIdsOf",
+				"outputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "",
+						"type": "bytes32[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "tokenOwnerOf",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bool",
+						"name": "force",
+						"type": "bool"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "transfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "from",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "to",
+						"type": "address[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "tokenId",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bool[]",
+						"name": "force",
+						"type": "bool[]"
+					},
+					{
+						"internalType": "bytes[]",
+						"name": "data",
+						"type": "bytes[]"
+					}
+				],
+				"name": "transferBatch",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"author": "Aratta Labs",
+			"custom:security-contact": "atenyun@gmail.com",
+			"details": "You will find the deployed contract addresses in the README.md file",
+			"errors": {
+				"ERC725Y_DataKeysValuesEmptyArray()": [
+					{
+						"details": "Reverts when one of the array parameter provided to {setDataBatch} function is an empty array."
+					}
+				],
+				"ERC725Y_DataKeysValuesLengthMismatch()": [
+					{
+						"details": "Reverts when there is not the same number of elements in the `datakeys` and `dataValues` array parameters provided when calling the {setDataBatch} function."
+					}
+				],
+				"ERC725Y_MsgValueDisallowed()": [
+					{
+						"details": "Reverts when sending value to the {setData} or {setDataBatch} function."
+					}
+				],
+				"InvalidExtensionAddress(bytes)": [
+					{
+						"details": "reverts when the bytes retrieved from the LSP17 data key is not a valid address (not 20 bytes)"
+					}
+				],
+				"InvalidFunctionSelector(bytes)": [
+					{
+						"details": "reverts when the contract is called with a function selector not valid (less than 4 bytes of data)"
+					}
+				],
+				"LSP4TokenNameNotEditable()": [
+					{
+						"details": "Reverts when trying to edit the data key `LSP4TokenName` after the digital asset contract has been deployed / initialized. The `LSP4TokenName` data key is located inside the ERC725Y data key-value store of the digital asset contract. It can be set only once inside the constructor/initializer when the digital asset contract is being deployed / initialized."
+					}
+				],
+				"LSP4TokenSymbolNotEditable()": [
+					{
+						"details": "Reverts when trying to edit the data key `LSP4TokenSymbol` after the digital asset contract has been deployed / initialized. The `LSP4TokenSymbol` data key is located inside the ERC725Y data key-value store of the digital asset contract. It can be set only once inside the constructor/initializer when the digital asset contract is being deployed / initialized."
+					}
+				],
+				"LSP4TokenTypeNotEditable()": [
+					{
+						"details": "Reverts when trying to edit the data key `LSP4TokenType` after the digital asset contract has been deployed / initialized. The `LSP4TokenType` data key is located inside the ERC725Y data key-value store of the digital asset contract. It can be set only once inside the constructor / initializer when the digital asset contract is being deployed / initialized."
+					}
+				],
+				"LSP8BatchCallFailed(uint256)": [
+					{
+						"details": "Reverts when a batch call failed."
+					}
+				],
+				"LSP8CannotSendToAddressZero()": [
+					{
+						"details": "Reverts when trying to send token to the zero address."
+					}
+				],
+				"LSP8CannotUseAddressZeroAsOperator()": [
+					{
+						"details": "Reverts when trying to set the zero address as an operator."
+					}
+				],
+				"LSP8InvalidTransferBatch()": [
+					{
+						"details": "Reverts when the parameters used for `transferBatch` have different lengths."
+					}
+				],
+				"LSP8NonExistentTokenId(bytes32)": [
+					{
+						"details": "Reverts when `tokenId` has not been minted."
+					}
+				],
+				"LSP8NonExistingOperator(address,bytes32)": [
+					{
+						"details": "Reverts when `operator` is not an operator for the `tokenId`."
+					}
+				],
+				"LSP8NotTokenOperator(bytes32,address)": [
+					{
+						"details": "Reverts when `caller` is not an allowed operator for `tokenId`."
+					}
+				],
+				"LSP8NotTokenOwner(address,bytes32,address)": [
+					{
+						"details": "Reverts when `caller` is not the `tokenOwner` of the `tokenId`."
+					}
+				],
+				"LSP8NotifyTokenReceiverContractMissingLSP1Interface(address)": [
+					{
+						"details": "Reverts if the `tokenReceiver` does not implement LSP1 when minting or transferring tokens with `bool force` set as `false`."
+					}
+				],
+				"LSP8NotifyTokenReceiverIsEOA(address)": [
+					{
+						"details": "Reverts if the `tokenReceiver` is an EOA when minting or transferring tokens with `bool force` set as `false`."
+					}
+				],
+				"LSP8OperatorAlreadyAuthorized(address,bytes32)": [
+					{
+						"details": "Reverts when `operator` is already authorized for the `tokenId`."
+					}
+				],
+				"LSP8RevokeOperatorNotAuthorized(address,address,bytes32)": [
+					{
+						"details": "Reverts when the call to revoke operator is not authorized."
+					}
+				],
+				"LSP8TokenContractCannotHoldValue()": [
+					{
+						"details": "Error occurs when sending native tokens to the LSP8 contract without sending any data. E.g. Sending value without passing a bytes4 function selector to call a LSP17 Extension."
+					}
+				],
+				"LSP8TokenIdAlreadyMinted(bytes32)": [
+					{
+						"details": "Reverts when `tokenId` has already been minted."
+					}
+				],
+				"LSP8TokenIdFormatNotEditable()": [
+					{
+						"details": "Reverts when trying to edit the data key `LSP8TokenIdFormat` after the identifiable digital asset contract has been deployed. The `LSP8TokenIdFormat` data key is located inside the ERC725Y Data key-value store of the identifiable digital asset contract. It can be set only once inside the constructor/initializer when the identifiable digital asset contract is being deployed."
+					}
+				],
+				"LSP8TokenIdsDataEmptyArray()": [
+					{
+						"details": "Reverts when empty arrays is passed to the function"
+					}
+				],
+				"LSP8TokenIdsDataLengthMismatch()": [
+					{
+						"details": "Reverts when the length of the token IDs data arrays is not equal"
+					}
+				],
+				"LSP8TokenOwnerCannotBeOperator()": [
+					{
+						"details": "Reverts when trying to authorize or revoke the token's owner as an operator."
+					}
+				],
+				"LSP8TokenOwnerChanged(bytes32,address,address)": [
+					{
+						"details": "Reverts when the token owner changed inside the {_beforeTokenTransfer} hook."
+					}
+				],
+				"NoExtensionFoundForFunctionSelector(bytes4)": [
+					{
+						"details": "reverts when there is no extension for the function selector being called with"
+					}
+				],
+				"OwnableCallerNotTheOwner(address)": [
+					{
+						"details": "Reverts when only the owner is allowed to call the function.",
+						"params": {
+							"callerAddress": "The address that tried to make the call."
+						}
+					}
+				],
+				"OwnableCannotSetZeroAddressAsOwner()": [
+					{
+						"details": "Reverts when trying to set `address(0)` as the contract owner when deploying the contract, initializing it or transferring ownership of the contract."
+					}
+				]
+			},
+			"events": {
+				"DataChanged(bytes32,bytes)": {
+					"details": "Emitted when data at a specific `dataKey` was changed to a new value `dataValue`.",
+					"params": {
+						"dataKey": "The data key for which a bytes value is set.",
+						"dataValue": "The value to set for the given data key."
+					}
+				},
+				"OperatorAuthorizationChanged(address,address,bytes32,bytes)": {
+					"details": "Emitted when `tokenOwner` enables `operator` to transfer or burn the `tokenId`.",
+					"params": {
+						"operator": "The address authorized as an operator.",
+						"operatorNotificationData": "The data to notify the operator about via LSP1.",
+						"tokenId": "The tokenId `operator` address has access on behalf of `tokenOwner`.",
+						"tokenOwner": "The owner of the `tokenId`."
+					}
+				},
+				"OperatorRevoked(address,address,bytes32,bool,bytes)": {
+					"details": "Emitted when `tokenOwner` disables `operator` to transfer or burn `tokenId` on its behalf.",
+					"params": {
+						"notified": "Bool indicating whether the operator has been notified or not",
+						"operator": "The address revoked from the operator array ({getOperatorsOf}).",
+						"operatorNotificationData": "The data to notify the operator about via LSP1.",
+						"tokenId": "The tokenId `operator` is revoked from operating on.",
+						"tokenOwner": "The owner of the `tokenId`."
+					}
+				},
+				"TokenIdDataChanged(bytes32,bytes32,bytes)": {
+					"details": "Emitted when setting data for `tokenId`.",
+					"params": {
+						"dataKey": "The data key for which a bytes value is set.",
+						"dataValue": "The value to set for the given data key.",
+						"tokenId": "The tokenId which data is set for."
+					}
+				},
+				"Transfer(address,address,address,bytes32,bool,bytes)": {
+					"details": "Emitted when `tokenId` token is transferred from the `from` to the `to` address.",
+					"params": {
+						"data": "Any additional data the caller included by the caller during the transfer, and sent in the hooks to the `from` and `to` addresses.",
+						"force": "If the token transfer enforces the `to` recipient address to be a contract that implements the LSP1 standard or not.",
+						"from": "The previous owner of the `tokenId`",
+						"operator": "The address of operator that sent the `tokenId`",
+						"to": "The new owner of `tokenId`",
+						"tokenId": "The tokenId that was transferred"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"authorizeOperator(address,bytes32,bytes)": {
+					"details": "Allow an `operator` address to transfer or burn a specific `tokenId` on behalf of its token owner. See {isOperatorFor}. Notify the operator based on the LSP1-UniversalReceiver standard",
+					"params": {
+						"operator": "The address to authorize as an operator.",
+						"operatorNotificationData": "The data to notify the operator about via LSP1.",
+						"tokenId": "The token ID operator has access to."
+					}
+				},
+				"balanceOf(address)": {
+					"details": "Get the number of token IDs owned by `tokenOwner`.",
+					"params": {
+						"tokenOwner": "The address to query     *"
+					},
+					"returns": {
+						"_0": "The total number of token IDs that `tokenOwner` owns."
+					}
+				},
+				"batchCalls(bytes[])": {
+					"custom:info": "It's not possible to send value along the functions call due to the use of `delegatecall`.",
+					"details": "Allows a caller to batch different function calls in one call. Perform a `delegatecall` on self, to call different functions with preserving the context.",
+					"params": {
+						"data": "An array of ABI encoded function calls to be called on the contract."
+					},
+					"returns": {
+						"results": "An array of abi-encoded data returned by the functions executed."
+					}
+				},
+				"calcPercentage(uint256,uint256)": {
+					"params": {
+						"amount": "The total amount",
+						"bps": "The precentage"
+					},
+					"returns": {
+						"_0": "percentage"
+					}
+				},
+				"getData(bytes32)": {
+					"details": "Get in the ERC725Y storage the bytes data stored at a specific data key `dataKey`.",
+					"params": {
+						"dataKey": "The data key for which to retrieve the value."
+					},
+					"returns": {
+						"dataValue": "The bytes value stored under the specified data key."
+					}
+				},
+				"getDataBatch(bytes32[])": {
+					"details": "Get in the ERC725Y storage the bytes data stored at multiple data keys `dataKeys`.",
+					"params": {
+						"dataKeys": "The array of keys which values to retrieve"
+					},
+					"returns": {
+						"dataValues": "The array of data stored at multiple keys"
+					}
+				},
+				"getDataBatchForTokenIds(bytes32[],bytes32[])": {
+					"params": {
+						"dataKeys": "An array of data keys corresponding to the token IDs.",
+						"tokenIds": "An array of token IDs."
+					},
+					"returns": {
+						"dataValues": "An array of data values for each pair of `tokenId` and `dataKey`."
+					}
+				},
+				"getDataForTokenId(bytes32,bytes32)": {
+					"params": {
+						"dataKey": "The key for the data to retrieve.",
+						"tokenId": "The unique identifier for a token."
+					},
+					"returns": {
+						"dataValue": "The data value associated with the given `tokenId` and `dataKey`."
+					}
+				},
+				"getOperatorsOf(bytes32)": {
+					"details": "Returns all `operator` addresses that are allowed to transfer or burn a specific `tokenId` on behalf of its owner.",
+					"params": {
+						"tokenId": "The token ID to get the operators for."
+					},
+					"returns": {
+						"_0": "An array of operators allowed to transfer or burn a specific `tokenId`. Requirements - `tokenId` must exist."
+					}
+				},
+				"isOperatorFor(address,bytes32)": {
+					"details": "Returns whether `operator` address is an operator for a given `tokenId`.",
+					"params": {
+						"operator": "The address to query operator status for.",
+						"tokenId": "The token ID to check if `operator` is allowed to operate on."
+					},
+					"returns": {
+						"_0": "`true` if `operator` is an operator for `tokenId`, `false` otherwise."
+					}
+				},
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+				},
+				"revokeOperator(address,bytes32,bool,bytes)": {
+					"details": "Remove access of `operator` for a given `tokenId`, disallowing it to transfer `tokenId` on behalf of its owner. See also {isOperatorFor}.",
+					"params": {
+						"notify": "Boolean indicating whether to notify the operator or not",
+						"operator": "The address to revoke as an operator.",
+						"operatorNotificationData": "The data to notify the operator about via LSP1.",
+						"tokenId": "The tokenId `operator` is revoked from operating on."
+					}
+				},
+				"setData(bytes32,bytes)": {
+					"custom:events": "{DataChanged} event.",
+					"custom:requirements": "- SHOULD only be callable by the {owner}.",
+					"custom:warning": "**Note for developers:** despite the fact that this function is set as `payable`, if the function is not intended to receive value (= native tokens), **an additional check should be implemented to ensure that `msg.value` sent was equal to 0**.",
+					"details": "Sets a single bytes value `dataValue` in the ERC725Y storage for a specific data key `dataKey`. The function is marked as payable to enable flexibility on child contracts. For instance to implement a fee mechanism for setting specific data.",
+					"params": {
+						"dataKey": "The data key for which to set a new value.",
+						"dataValue": "The new bytes value to set."
+					}
+				},
+				"setDataBatch(bytes32[],bytes[])": {
+					"custom:events": "{DataChanged} event **for each data key/value pair set**.",
+					"custom:requirements": "- SHOULD only be callable by the {owner} of the contract.",
+					"custom:warning": "**Note for developers:** despite the fact that this function is set as `payable`, if the function is not intended to receive value (= native tokens), **an additional check should be implemented to ensure that `msg.value` sent was equal to 0**.",
+					"details": "Batch data setting function that behaves the same as {setData} but allowing to set multiple data key/value pairs in the ERC725Y storage in the same transaction.",
+					"params": {
+						"dataKeys": "An array of data keys to set bytes values for.",
+						"dataValues": "An array of bytes values to set for each `dataKeys`."
+					}
+				},
+				"setDataBatchForTokenIds(bytes32[],bytes32[],bytes[])": {
+					"params": {
+						"dataKeys": "An array of data keys corresponding to the token IDs.",
+						"dataValues": "An array of values to set for the given data keys.",
+						"tokenIds": "An array of token IDs."
+					}
+				},
+				"setDataForTokenId(bytes32,bytes32,bytes)": {
+					"params": {
+						"dataKey": "The key for the data to set.",
+						"dataValue": "The value to set for the given data key.",
+						"tokenId": "The unique identifier for a token."
+					}
+				},
+				"supportsInterface(bytes4)": {
+					"details": "Returns true if this contract implements the interface defined by `interfaceId`. See the corresponding https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section] to learn more about how these ids are created. This function call must use less than 30 000 gas."
+				},
+				"tokenIdsOf(address)": {
+					"details": "Returns the list of token IDs that the `tokenOwner` address owns.",
+					"params": {
+						"tokenOwner": "The address that we want to get the list of token IDs for."
+					},
+					"returns": {
+						"_0": "An array of `bytes32[] tokenIds` owned by `tokenOwner`."
+					}
+				},
+				"tokenOwnerOf(bytes32)": {
+					"details": "Returns the address that owns a given `tokenId`.",
+					"params": {
+						"tokenId": "The token ID to query the owner for."
+					},
+					"returns": {
+						"_0": "The owner address of the given `tokenId`."
+					}
+				},
+				"totalSupply()": {
+					"details": "Returns the number of existing tokens that have been minted in this contract.",
+					"returns": {
+						"_0": "The number of existing tokens."
+					}
+				},
+				"transfer(address,address,bytes32,bool,bytes)": {
+					"details": "Transfer a given `tokenId` token from the `from` address to the `to` address. If operators are set for a specific `tokenId`, all the operators are revoked after the tokenId have been transferred. The `force` parameter MUST be set to `true` when transferring tokens to Externally Owned Accounts (EOAs) or contracts that do not implement the LSP1 standard.",
+					"params": {
+						"data": "Any additional data the caller wants included in the emitted event, and sent in the hooks of the `from` and `to` addresses.",
+						"force": "When set to `true`, the `to` address CAN be any addres. When set to `false`, the `to` address MUST be a contract that supports the LSP1 UniversalReceiver standard.",
+						"from": "The address that owns the given `tokenId`.",
+						"to": "The address that will receive the `tokenId`.",
+						"tokenId": "The token ID to transfer."
+					}
+				},
+				"transferBatch(address[],address[],bytes32[],bool[],bytes[])": {
+					"details": "Transfers multiple tokens at once based on the arrays of `from`, `to` and `tokenId`. If any transfer fails, the whole call will revert.",
+					"params": {
+						"data": "Any additional data the caller wants included in the emitted event, and sent in the hooks to the `from` and `to` addresses.",
+						"force": "When set to `true`, `to` may be any address. When set to `false`, `to` must be a contract that supports the LSP1 standard and not revert.",
+						"from": "An array of sending addresses.",
+						"to": "An array of recipient addresses.",
+						"tokenId": "An array of token IDs to transfer."
+					}
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
+			"title": "Pepito Genesis 🐸",
+			"version": 1
+		},
+		"userdoc": {
+			"errors": {
+				"LSP8BatchCallFailed(uint256)": [
+					{
+						"notice": "Batch call failed."
+					}
+				],
+				"LSP8TokenContractCannotHoldValue()": [
+					{
+						"notice": "LSP8 contract cannot receive native tokens."
+					}
+				]
+			},
+			"events": {
+				"DataChanged(bytes32,bytes)": {
+					"notice": "The following data key/value pair has been changed in the ERC725Y storage: Data key: `dataKey`, data value: `dataValue`."
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"batchCalls(bytes[])": {
+					"notice": "Executing the following batch of abi-encoded function calls on the contract: `data`."
+				},
+				"calcPercentage(uint256,uint256)": {
+					"notice": "Calculate percentage"
+				},
+				"getBalance()": {
+					"notice": "Return the balance of this contract"
+				},
+				"getData(bytes32)": {
+					"notice": "Reading the ERC725Y storage for data key `dataKey` returned the following value: `dataValue`."
+				},
+				"getDataBatch(bytes32[])": {
+					"notice": "Reading the ERC725Y storage for data keys `dataKeys` returned the following values: `dataValues`."
+				},
+				"getDataBatchForTokenIds(bytes32[],bytes32[])": {
+					"notice": "Retrieves data in batch for multiple `tokenId` and `dataKey` pairs."
+				},
+				"getDataForTokenId(bytes32,bytes32)": {
+					"notice": "Retrieves data for a specific `tokenId` and `dataKey`."
+				},
+				"mintmint()": {
+					"notice": "Public Mint"
+				},
+				"setData(bytes32,bytes)": {
+					"notice": "Setting the following data key value pair in the ERC725Y storage. Data key: `dataKey`, data value: `dataValue`."
+				},
+				"setDataBatch(bytes32[],bytes[])": {
+					"notice": "Setting the following data key value pairs in the ERC725Y storage. Data keys: `dataKeys`, data values: `dataValues`."
+				},
+				"setDataBatchForTokenIds(bytes32[],bytes32[],bytes[])": {
+					"notice": "Sets data in batch for multiple `tokenId` and `dataKey` pairs."
+				},
+				"setDataForTokenId(bytes32,bytes32,bytes)": {
+					"notice": "Sets data for a specific `tokenId` and `dataKey`."
+				},
+				"transferBalance(address,uint256)": {
+					"notice": "Transfer balance from this contract to input address"
+				},
+				"withdraw()": {
+					"notice": "Withdraw the balance from this contract to the owner's address"
+				}
+			},
+			"notice": "Pepito Genesis Contract",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"lsp8tokensample/lsp8-sample.sol": "PepitoGenesis"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@erc725/smart-contracts/contracts/ERC725Y.sol": {
+			"keccak256": "0x4cb23ef9c2c93d881737c47cd0eebd63dcb39828484fda1fd3a5ce9971df3ef7",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://ff707e4552e8e442ff88d8b961583912664eaee373b49f03b1e6c4cd28213938",
+				"dweb:/ipfs/QmVELUkQr3TikdEZoG9cxhwUCknuvSYVGKwpeDF76XiZpb"
+			]
+		},
+		"@erc725/smart-contracts/contracts/ERC725YCore.sol": {
+			"keccak256": "0x90670a99b91307ed47851fcc72cee06f246f49a1810307c9e2f978116bbabfc4",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://06a94fdd05c104d4d1368398ed4b00926d27c1485a5130aeb257bc904671bcc0",
+				"dweb:/ipfs/Qmdsph9AnSiAvYpmgVXfy3Do5dCWKBVL3xWMeGaT7qjte2"
+			]
+		},
+		"@erc725/smart-contracts/contracts/constants.sol": {
+			"keccak256": "0x37da1619e580b6af6a68e91b4784f7945ee2344fad3a96b6dfb2592e35fedb60",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://fb9436bd587d7b38c532f317dbd4bc5f178b50906b1a5e29adf24908f27b2c47",
+				"dweb:/ipfs/QmW2vTCNM7Mr4vW5t9yBK7Zmh1FtaVjPwdAbyFcPNBSZYL"
+			]
+		},
+		"@erc725/smart-contracts/contracts/custom/OwnableUnset.sol": {
+			"keccak256": "0xa9c83adb0239b86c0ff6251a03bc70115470c7ae10eb99276d6dd33636054b36",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://95a0109837bdffe887b6568b7f9bbde2b20cfd0c4db638805cf61ada5743b24d",
+				"dweb:/ipfs/QmYH2erMtqiEYjRznWnc6NbBbwxvy6ArE45jtXYEyWi3Bc"
+			]
+		},
+		"@erc725/smart-contracts/contracts/errors.sol": {
+			"keccak256": "0xaafdb4370450b8874224b3c0b2b712149da97a50c9a47f56e4b654aa57eb87c5",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://a4e40b0f64613e5bbd62575facc72d2bcad249595e9397b5bff063dc5a81e757",
+				"dweb:/ipfs/QmXx5yDvPxWzKXFYK7HDAbSNDBKRskYLoDwgrThmAimzDL"
+			]
+		},
+		"@erc725/smart-contracts/contracts/interfaces/IERC725Y.sol": {
+			"keccak256": "0xa47c9e3eba0c733a1685b9fa309f753540c89ad2dca73236a2c953e7f5680e7b",
+			"license": "CC0-1.0",
+			"urls": [
+				"bzz-raw://59076395f660838919a2068cb7792c0fa70533642bbc5b4e3cc3cbb2c9ec7b50",
+				"dweb:/ipfs/QmQqew3mDuyHCBdd4v1JiwRiKEbzk3LeHchzTHSdyhYg5b"
+			]
+		},
+		"@lukso/lsp-smart-contracts/contracts/LSP8IdentifiableDigitalAsset/LSP8IdentifiableDigitalAsset.sol": {
+			"keccak256": "0x592c53c23d21eb3cbc4e453db0fe1fdcbe1ac9dd740d09309b836d118a8ecf34",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://fe0addf5ad37bc784af425726b0f8aae8ceaa53859ac55b25259963bb00f8a7c",
+				"dweb:/ipfs/QmVzLVeUHT7kMMUKgR49X6GFoTQ81f2QQF5L6hs7zjHp7K"
+			]
+		},
+		"@lukso/lsp1-contracts/contracts/ILSP1UniversalReceiver.sol": {
+			"keccak256": "0x5b8764a678dc9d6673eafa8ad0ee6053cdea30acb58015bdf9c93f9f1788b49b",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://0e26dcf5d66120b7a0895ddcaec92207e17c63344fca885d2b7e3fe953ec027c",
+				"dweb:/ipfs/QmetAuz9etfz9BG9oPJCwMthnhfd8XvZYLBmMfrPNUm3qV"
+			]
+		},
+		"@lukso/lsp1-contracts/contracts/LSP1Constants.sol": {
+			"keccak256": "0x0f87fc38243fc70316e22814f5a79d9c0770a39f64077cbc6fb5fddfa1d4c23c",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://c7d83f054b71dfa5ca48a9a811e6a985ff6b38a9e5f4c220ea2ec3a322cce7cf",
+				"dweb:/ipfs/QmaehpHpqc5dtRCm9BoU8vCY59AeEnmGvmmwPirVr47oGp"
+			]
+		},
+		"@lukso/lsp1-contracts/contracts/LSP1Utils.sol": {
+			"keccak256": "0xa81bf1910c3b56b43bf58d0be2105c434ed3b65cfb3674e282b5aba3fd35afb0",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://374e7bef39522d65cf8e45c365178eb54d159b9267d0c2a2b97dfea10e52d41f",
+				"dweb:/ipfs/QmfVYVnVSTRVAAifFSyFk8icePgw3eeqpjAKWAwfHMu6vX"
+			]
+		},
+		"@lukso/lsp17contractextension-contracts/contracts/LSP17Constants.sol": {
+			"keccak256": "0x6d4bb208587872ad563fef31655c44f7de03baa5b4a513910c0003aea0c04036",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://880c3b21e2090a14e7bba94ac5c8d4633e8a81d93c6f619454167a01dcc866d8",
+				"dweb:/ipfs/QmZp6YVM4Eor5XtuXXqGRaPAJ3u5KCmLwuNRAGf4JY7sK1"
+			]
+		},
+		"@lukso/lsp17contractextension-contracts/contracts/LSP17Errors.sol": {
+			"keccak256": "0x75a0159f76a3c5bf26b13aa404aca2f588ea41928eb1483683e29d2031fe5abf",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://f1b93e7eb5a88a2f42a9dfa061ca5e93e7650cd9114010faa18faf0a5508f579",
+				"dweb:/ipfs/QmXmLhf1ejsF7G1FZnvpTBRS9oQ9ZTuqCBRT1im3vAuUYW"
+			]
+		},
+		"@lukso/lsp17contractextension-contracts/contracts/LSP17Extendable.sol": {
+			"keccak256": "0x5983e916a4cb604a45b585d7f745f5ac8bf69ef51fbc78cf8e70408e29e008c2",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://e1e9a7b8dc210030d35b4e2c3dbb7107f51c063256f7e6120997ed638f033db1",
+				"dweb:/ipfs/QmRQgkaDnC9sAb9mZJtVgBsAR1xfmcTA2erCVUiyszy15o"
+			]
+		},
+		"@lukso/lsp2-contracts/contracts/LSP2Utils.sol": {
+			"keccak256": "0x86ce8a85d12c79b76db5413b05b9bff16cd865b395efdc0e85b06b3b5e17219b",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://7ebb6d1152f88b459b9e8fc3ef6361a9fb9d03bfa994148e6b125a2ee4025487",
+				"dweb:/ipfs/QmX18bCecAtrjqKTyCPqRrUuvVYSW1XZZJUgvjfYnqfmEH"
+			]
+		},
+		"@lukso/lsp4-contracts/contracts/LSP4Constants.sol": {
+			"keccak256": "0xdf9b7c688d39a92cb3238136a9f56554245d5ae9b6568dcd6164d0e15c6f56c7",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://bb36a427cdfa0f394d2d78014f85152ab383499fc3c3d6285d4b801c656e7c3f",
+				"dweb:/ipfs/QmZJehfeWKfHLyZLufhs9u4ZyVztGCUNWXzFgfZSU837vU"
+			]
+		},
+		"@lukso/lsp4-contracts/contracts/LSP4DigitalAssetMetadata.sol": {
+			"keccak256": "0xd120529845267176d7658eb3b610fd9412012ce58cfde05a42f7fcee1c371dce",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://4e2919d97ff39ae203dc57f53a7ae6a4f1dfe9354e564744ee3752771687b796",
+				"dweb:/ipfs/QmbNwNCDnLcD4jrboPJhAMXVEiVGbagBteXM5sVByZ8A1h"
+			]
+		},
+		"@lukso/lsp4-contracts/contracts/LSP4DigitalAssetMetadataCore.sol": {
+			"keccak256": "0xc442e52d34bb98acc1494675856b1f1d124af1375d8e23a9bfcc3b6c1865e1fc",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://84254359ed929c1991136f9c3e934ddfa74cd85684de6c44cb70afa70d12f837",
+				"dweb:/ipfs/QmWfmionUJJYyYDoeSQLGUHhou2sWxhWzwtU5GVjpumiSS"
+			]
+		},
+		"@lukso/lsp4-contracts/contracts/LSP4Errors.sol": {
+			"keccak256": "0x3db7fd252ed02ce27686141125c3d65d3ff682a32601e1e8611becd9357a57b5",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://5aded62a160ed7f9860996004d1656e8592b3f97d478d8597f8ad6afbe4f34b7",
+				"dweb:/ipfs/QmcnmLVt8cmz1iRNaX5c6iNYckRgUXGz8YkjHW9T1KNB5A"
+			]
+		},
+		"@lukso/lsp8-contracts/contracts/ILSP8IdentifiableDigitalAsset.sol": {
+			"keccak256": "0x16dccaeb35168c4e61763a2c35b075eeed7505661b10fc9c16194af6eb3751ad",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://48f03e83068c241fb7f380b8ad31c8aa3c0f3de59df6ff4c4881b2589d7610b7",
+				"dweb:/ipfs/QmW1wmc6kkUXF9gMdAwX7GxjrF4mLqUd7dognerLVRod4v"
+			]
+		},
+		"@lukso/lsp8-contracts/contracts/LSP8Constants.sol": {
+			"keccak256": "0x2372e7ec422a13ce3e7968e5fbb081b67816b5de974bd76ec61cfed787abbe1b",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://6d147e2f290ed60e36e9187dc7cce7d7ee1a62eee1c25c761e6090d88e3fa383",
+				"dweb:/ipfs/Qmf9HEYCCjx2xBopvq7WhhtjvL9AEihvNcZ512751Wg6LN"
+			]
+		},
+		"@lukso/lsp8-contracts/contracts/LSP8Errors.sol": {
+			"keccak256": "0xff2c1791043272eb4a7c05bc77fa0a0234678991b0700f84d92edbd31fefd905",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://72b32242e8a4b7c12355de3f1c463437a81d8d5f8d34b3a8d25d726340b891c0",
+				"dweb:/ipfs/Qmbhz53zdudSQbPwES2qMHqLHaph4GhigNETC481VWwK6J"
+			]
+		},
+		"@lukso/lsp8-contracts/contracts/LSP8IdentifiableDigitalAsset.sol": {
+			"keccak256": "0xe8cc62169bfbf1e6472e217ab5833428dc8234a1db77f7cc65e360bea7ff89c9",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://4939ef03cba6fbb74d409ab712721017095542f100fd95666af7ace58fa176c8",
+				"dweb:/ipfs/QmSau5c7tUcawWgGEqwe5U14dop6x9YkLDsaUWTzAktHik"
+			]
+		},
+		"@lukso/lsp8-contracts/contracts/LSP8IdentifiableDigitalAssetCore.sol": {
+			"keccak256": "0xe536b1021d51a20951a3d1446aee234c3ea558a008d023343a30c8d2fb83f4ad",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://c9366d571daaf4dc1fef4820c4f7ea1e2546753f9b01aa8ff9926d7d96653da3",
+				"dweb:/ipfs/QmTfJhHp5HK2oTAm1Ttr8bGcLGWHguj2dNqnvVqzGuWfb1"
+			]
+		},
+		"@openzeppelin/contracts/utils/Base64.sol": {
+			"keccak256": "0x822fe67e9e671773d29c8182e7287b42edf5f575eab1eb98558d5ccbdff61c96",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7ce73cb57d5a2e705a0a65cac2ed73ab2fa91932e8af22b7ec1a6a3d88f28669",
+				"dweb:/ipfs/QmcbjWFekUTsNeoFwGgUT4xtXoVzsA38ca9pkC4jxvxy7L"
+			]
+		},
+		"@openzeppelin/contracts/utils/Counters.sol": {
+			"keccak256": "0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://59e1c62884d55b70f3ae5432b44bb3166ad71ae3acd19c57ab6ddc3c87c325ee",
+				"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu"
+			]
+		},
+		"@openzeppelin/contracts/utils/Strings.sol": {
+			"keccak256": "0x3088eb2868e8d13d89d16670b5f8612c4ab9ff8956272837d8e90106c59c14a0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b81d9ff6559ea5c47fc573e17ece6d9ba5d6839e213e6ebc3b4c5c8fe4199d7f",
+				"dweb:/ipfs/QmPCW1bFisUzJkyjroY3yipwfism9RRCigCcK1hbXtVM8n"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/ERC165.sol": {
+			"keccak256": "0xd10975de010d89fd1c78dc5e8a9a7e7f496198085c151648f20cba166b32582b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fb0048dee081f6fffa5f74afc3fb328483c2a30504e94a0ddd2a5114d731ec4d",
+				"dweb:/ipfs/QmZptt1nmYoA5SgjwnSgWqgUSDgm4q52Yos3xhnMv3MV43"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/ERC165Checker.sol": {
+			"keccak256": "0x5a08ad61f4e82b8a3323562661a86fb10b10190848073fdc13d4ac43710ffba5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6f7bb74cf88fd88daa34e118bc6e363381d05044f34f391d39a10c0c9dac3ebd",
+				"dweb:/ipfs/QmNbQ3v8v4zuDtg7VeLAbdhAm3tCzUodNoDZZ8ekmCHWZX"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f",
+				"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xe4455ac1eb7fc497bb7402579e7b4d64d928b846fce7d2b6fde06d366f21c2b3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cc8841b3cd48ad125e2f46323c8bad3aa0e88e399ec62acb9e57efa7e7c8058c",
+				"dweb:/ipfs/QmSqE4mXHA2BXW58deDbXE8MTcsL5JSKNDbm23sVQxRLPS"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/SignedMath.sol": {
+			"keccak256": "0xf92515413956f529d95977adc9b0567d583c6203fc31ab1c23824c35187e3ddc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c50fcc459e49a9858b6d8ad5f911295cb7c9ab57567845a250bf0153f84a95c7",
+				"dweb:/ipfs/QmcEW85JRzvDkQggxiBBLVAasXWdkhEysqypj9EaB6H2g6"
+			]
+		},
+		"@openzeppelin/contracts/utils/structs/EnumerableSet.sol": {
+			"keccak256": "0x9f4357008a8f7d8c8bf5d48902e789637538d8c016be5766610901b4bba81514",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://20bf19b2b851f58a4c24543de80ae70b3e08621f9230eb335dc75e2d4f43f5df",
+				"dweb:/ipfs/QmSYuH1AhvJkPK8hNvoPqtExBcgTB42pPRHgTHkS5c5zYW"
+			]
+		},
+		"lsp8tokensample/_error.sol": {
+			"keccak256": "0x0ff53ad6097ff966df2873d1b48e094d5051b2e6c8a16bf081c42da0fe34b3e2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c4b3853c82980c0dc7a62168025f7371a82ad29b69ee2fd877433310676b02cc",
+				"dweb:/ipfs/QmQCdvE6kDokcBsykEt9JAy8wMvjmiPeaguBg6CskXf4PD"
+			]
+		},
+		"lsp8tokensample/_event.sol": {
+			"keccak256": "0x86ccbd3200c342d419b4bf1c897d28cb1e71e1408de8200cf8f8fff43ab4c85f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1720380808abee1d8376ef9b8dc37664f442c8da497822facab02f4819abe96b",
+				"dweb:/ipfs/QmV296v84SXZUGo5jC5JPqeE397VtVSYLTz2jbSijN5cgv"
+			]
+		},
+		"lsp8tokensample/lsp8-sample.sol": {
+			"keccak256": "0xc5e57b74121dcd29f774c62e7785f9eafe102363a398c5a37bef959b9dbcec26",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://05a7f6f45133f989514bc898bdde82544c7691f616822e4f31509a15e40fa0d9",
+				"dweb:/ipfs/QmfADvgPSESsZhbR4qinUzxSNSRo9cy9saiNHRYQvzhLAk"
+			]
+		}
+	},
+	"version": 1
+}

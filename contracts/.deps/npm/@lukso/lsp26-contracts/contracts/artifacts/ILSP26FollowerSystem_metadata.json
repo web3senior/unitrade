@@ -1,0 +1,376 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "follower",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "Follow",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "unfollower",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "Unfollow",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "follow",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "addresses",
+						"type": "address[]"
+					}
+				],
+				"name": "followBatch",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "followerCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "followingCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "endIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "getFollowersByIndex",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "endIndex",
+						"type": "uint256"
+					}
+				],
+				"name": "getFollowsByIndex",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "follower",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "isFollowing",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "unfollow",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "addresses",
+						"type": "address[]"
+					}
+				],
+				"name": "unfollowBatch",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"Follow(address,address)": {
+					"params": {
+						"addr": "The address that is followed by `follower`",
+						"follower": "The address that follows `addr`"
+					}
+				},
+				"Unfollow(address,address)": {
+					"params": {
+						"addr": "The address that is unfollowed by `follower`",
+						"unfollower": "The address that unfollows `addr`"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"follow(address)": {
+					"custom:events": "{Follow} event when following an address.",
+					"params": {
+						"addr": "The address to start following."
+					}
+				},
+				"followBatch(address[])": {
+					"custom:events": "{Follow} event when following each address in the list.",
+					"params": {
+						"addresses": "The list of addresses to follow."
+					}
+				},
+				"followerCount(address)": {
+					"params": {
+						"addr": "The address whose followers count is requested."
+					},
+					"returns": {
+						"_0": "The number of followers of `addr`."
+					}
+				},
+				"followingCount(address)": {
+					"params": {
+						"addr": "The address of the follower whose following count is requested."
+					},
+					"returns": {
+						"_0": "The number of addresses that `addr` is following."
+					}
+				},
+				"getFollowersByIndex(address,uint256,uint256)": {
+					"params": {
+						"addr": "The address whose followers are requested.",
+						"endIndex": "The end index of the range (exclusive).",
+						"startIndex": "The start index of the range (inclusive)."
+					},
+					"returns": {
+						"_0": "An array of addresses that are following an addresses."
+					}
+				},
+				"getFollowsByIndex(address,uint256,uint256)": {
+					"params": {
+						"addr": "The address whose followed addresses are requested.",
+						"endIndex": "The end index of the range (exclusive).",
+						"startIndex": "The start index of the range (inclusive)."
+					},
+					"returns": {
+						"_0": "An array of addresses followed by the given address."
+					}
+				},
+				"isFollowing(address,address)": {
+					"params": {
+						"addr": "The address being followed.",
+						"follower": "The address of the follower to check."
+					},
+					"returns": {
+						"_0": "True if `follower` is following `addr`, false otherwise."
+					}
+				},
+				"unfollow(address)": {
+					"custom:events": "{Unfollow} event when unfollowing an address.",
+					"params": {
+						"addr": "The address to stop following."
+					}
+				},
+				"unfollowBatch(address[])": {
+					"custom:events": "{Follow} event when unfollowing each address in the list.",
+					"params": {
+						"addresses": "The list of addresses to unfollow."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"Follow(address,address)": {
+					"notice": "Emitted when following an address."
+				},
+				"Unfollow(address,address)": {
+					"notice": "Emitted when unfollowing an address."
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"follow(address)": {
+					"notice": "Follow an specific address."
+				},
+				"followBatch(address[])": {
+					"notice": "Follow a list of addresses."
+				},
+				"followerCount(address)": {
+					"notice": "Get the number of followers for an address."
+				},
+				"followingCount(address)": {
+					"notice": "Get the number of addresses an address is following."
+				},
+				"getFollowersByIndex(address,uint256,uint256)": {
+					"notice": "Get the list of addresses that follow an address within a specified range."
+				},
+				"getFollowsByIndex(address,uint256,uint256)": {
+					"notice": "Get the list of addresses the given address is following within a specified range."
+				},
+				"isFollowing(address,address)": {
+					"notice": "Check if an address is following a specific address."
+				},
+				"unfollow(address)": {
+					"notice": "Unfollow a specific address."
+				},
+				"unfollowBatch(address[])": {
+					"notice": "Unfollow a list of addresses."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/.deps/npm/@lukso/lsp26-contracts/contracts/ILSP26FollowerSystem.sol": "ILSP26FollowerSystem"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/.deps/npm/@lukso/lsp26-contracts/contracts/ILSP26FollowerSystem.sol": {
+			"keccak256": "0xd71c80510552ecdcd3712ab1c9410d370ae28638c6c6a8017fed47520613b502",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://d59ed8946be1ed2016a3867df5236feb6a5d1ef4eae2a96ca2c769cff8c7ebf0",
+				"dweb:/ipfs/QmRWaEwayQB2v91XsinHKMmbQQNBcwwvLaBJ8ypsJhG5q9"
+			]
+		}
+	},
+	"version": 1
+}

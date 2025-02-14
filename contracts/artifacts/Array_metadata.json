@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "fee",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"test.sol": "Array"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"test.sol": {
+			"keccak256": "0xd3229901ec90d91243258f417b407c4487957bbee13914564d0db68b2e27ad21",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8d00038c46ca4e8d3615ccdaa8ff146e9b6755b320cae3d4240e9f3ccd5b676b",
+				"dweb:/ipfs/QmaTBgeyEw5Cbm7BF3gHUPh7pSYdZaBvKKLET8dcxpiro6"
+			]
+		}
+	},
+	"version": 1
+}

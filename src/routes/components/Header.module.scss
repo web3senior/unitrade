@@ -1,0 +1,47 @@
+@use './../styles/components/responsive' as *;
+
+.header {
+  grid-row: 1/2;
+  grid-column: 1/1;
+
+  background-color: var(--white, #ffffff);
+
+  padding: 0 0.5rem;
+  height: 70px;
+
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+
+  > div {
+    height: 100%;
+  }
+}
+
+.logo {
+  column-gap: 0.5rem;
+
+  figure {
+    column-gap: 0.5rem;
+
+    figcaption {
+      position: relative;
+      color: #fc77ff;
+      font-size: 1.05rem;
+      font-weight: bold;
+    }
+  }
+}
+
+.wallet-container {
+  gap: 1rem;
+  align-items: stretch;
+}
+
+@include medium-down() {
+  .logo {
+    img {
+    }
+  }
+}
