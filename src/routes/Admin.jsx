@@ -311,7 +311,7 @@ function Admin() {
                           <button className={`btn`} style={{ background: `orange` }} onClick={(e) => updateItem(e, item['info'])}>
                             Update
                           </button>
-                          <input type={`hidden`} id={`itemURL${i}`} value={`${window.location.host}?collection=${item['info'].collection}&token_id=${item['info'].tokenId}`} />
+                          <input type={`hidden`} id={`itemURL${i}`} value={`https://${window.location.host}?collection=${item['info'].collection}&token_id=${item['info'].tokenId}`} />
                           <button className={`btn`} style={{ background: `royalblue` }} data-clipboard-target={`#itemURL${i}`}>
                             Copy Embed Link
                           </button>
