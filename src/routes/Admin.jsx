@@ -129,14 +129,14 @@ function Admin() {
     const isAuthorizedOperator = await contractLSP8.methods.isOperatorFor(import.meta.env.VITE_CONTRACT, tokenId).call()
 
     try {
-      window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+     // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
         // Approve tokenId
 
         if (!isAuthorizedOperator) {
           //Authorize then list
           contractLSP8.methods
             .authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x')
-            .send({ from: accounts[0] })
+            .send({ from: auth.accounts[0] })
             .then((res) => {
               console.log(`authorizeOperator result =>`, res)
 
@@ -144,7 +144,7 @@ function Admin() {
               contract.methods
                 .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
                 .send({
-                  from: accounts[0],
+                  from: auth.accounts[0],
                 })
                 .then((res) => {
                   console.log(res) //res.events.tokenId
@@ -167,7 +167,7 @@ function Admin() {
           contract.methods
             .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
             .send({
-              from: accounts[0],
+              from: auth.accounts[0],
             })
             .then((res) => {
               console.log(res) //res.events.tokenId
@@ -181,7 +181,8 @@ function Admin() {
               toast.dismiss(t)
             })
         }
-      })
+        
+     // })
     } catch (error) {
       console.log(error)
       toast.dismiss(t)

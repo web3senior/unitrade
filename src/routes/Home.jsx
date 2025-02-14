@@ -236,7 +236,7 @@ function Home() {
       <Toaster />
 
       {!token && (
-        <div className={`d-flex align-items-center justify-content-between w-100`} style={{ '--data-width': `58px` }}>
+        <div>
           <div className={`shimmer ${styles.shimmer}`} />
         </div>
       )}
