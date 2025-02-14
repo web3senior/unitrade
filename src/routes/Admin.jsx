@@ -85,39 +85,64 @@ function Admin() {
     const price = formData.get('price')
     const referralFee = formData.get('referralFee')
 
+    const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection)
+
+    const isAuthorizedOperator = await contractLSP8.methods.isOperatorFor(import.meta.env.VITE_CONTRACT, tokenId).call()
+
+
     try {
       window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
         // Approve tokenId
-        const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection)
 
-        contractLSP8.methods
-          .authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x')
-          .send({ from: accounts[0] })
-          .then((res) => {
-            console.log(`authorizeOperator result =>`, res)
+        if (!isAuthorizedOperator) {
+          //Authorize then list
+          contractLSP8.methods
+            .authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x')
+            .send({ from: accounts[0] })
+            .then((res) => {
+              console.log(`authorizeOperator result =>`, res)
 
-            // List token
-            contract.methods
-              .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
-              .send({
-                from: accounts[0],
-              })
-              .then((res) => {
-                console.log(res) //res.events.tokenId
+              // List token
+              contract.methods
+                .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
+                .send({
+                  from: accounts[0],
+                })
+                .then((res) => {
+                  console.log(res) //res.events.tokenId
 
-                setIsLoading(true)
+                  setIsLoading(true)
 
-                toast.success(`Done`)
-                toast.dismiss(t)
-              })
-              .catch((error) => {
-                toast.dismiss(t)
-              })
-          })
-          .catch((error) => {
-            console.log(`authorizeOperator error =>`, error)
-            toast.dismiss(t)
-          })
+                  toast.success(`Done`)
+                  toast.dismiss(t)
+                })
+                .catch((error) => {
+                  toast.dismiss(t)
+                })
+            })
+            .catch((error) => {
+              console.log(`authorizeOperator error =>`, error)
+              toast.dismiss(t)
+            })
+        } else {
+          // List token
+          contract.methods
+            .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
+            .send({
+              from: accounts[0],
+            })
+            .then((res) => {
+              console.log(res) //res.events.tokenId
+
+              setIsLoading(true)
+
+              toast.success(`Done`)
+              toast.dismiss(t)
+            })
+            .catch((error) => {
+              toast.dismiss(t)
+            })
+        }
       })
     } catch (error) {
       console.log(error)
@@ -164,7 +189,6 @@ function Admin() {
     document.querySelector(`[name="token"]`).value = info.token
   }
 
-
   useEffect(() => {
     getListedTokens().then((res) => {
       console.log(`listedTokens`, res)
@@ -182,7 +206,7 @@ function Admin() {
               data = data.slice(data.search(`data:application/json;`), data.length)
 
               // Read the data url
-         
+
               fetchData(data).then((dataContent) => {
                 console.log(dataContent)
                 dataContent.info = item
@@ -218,7 +242,7 @@ function Admin() {
       //
     })
 
-    new ClipboardJS('.btn');
+    new ClipboardJS('.btn')
   }, [])
 
   return (
@@ -254,12 +278,9 @@ function Admin() {
                                   className={`rounded ms-depth-16`}
                                   style={{ width: `48px` }}
                                   src={`${
-                                     
- (item.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 && item.LSP4Metadata?.images[0][0].url.search(`data:`) === -1 )
-                                    ?  
-import.meta.env.VITE_IPFS_GATEWAY + item.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '')
-                                  : 
-                                  item.LSP4Metadata.images[0][0].url
+                                    item.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 && item.LSP4Metadata?.images[0][0].url.search(`data:`) === -1
+                                      ? import.meta.env.VITE_IPFS_GATEWAY + item.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '')
+                                      : item.LSP4Metadata.images[0][0].url
                                   }`}
                                 />
                               ) : (
@@ -290,8 +311,8 @@ import.meta.env.VITE_IPFS_GATEWAY + item.LSP4Metadata.images[0][0].url.replace('
                           <button className={`btn`} style={{ background: `orange` }} onClick={(e) => updateItem(e, item['info'])}>
                             Update
                           </button>
-                          <input type={`hidden`} id={`itemURL${i}`} value={`${window.location.host}?collection=${item['info'].collection}&token_id=${item['info'].tokenId}`}/>
-                          <button className={`btn`} style={{ background: `royalblue` }}  data-clipboard-target={`#itemURL${i}`}>
+                          <input type={`hidden`} id={`itemURL${i}`} value={`${window.location.host}?collection=${item['info'].collection}&token_id=${item['info'].tokenId}`} />
+                          <button className={`btn`} style={{ background: `royalblue` }} data-clipboard-target={`#itemURL${i}`}>
                             Copy Embed Link
                           </button>
                           {/* onClick={(e) => copyEmbedLink(e, item['info'])} */}

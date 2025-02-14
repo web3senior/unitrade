@@ -30,7 +30,9 @@ function Home() {
 
     const t = toast.loading(`Waiting for transaction's confirmation`)
 
-    if (tokenInfo.token !== `0x0000000000000000000000000000000000000000`) {
+
+    if (tokenInfo.token.toString() !== `0x0000000000000000000000000000000000000000`) {
+   
       //approve and buy
 
       try {
@@ -76,11 +78,10 @@ function Home() {
       }
     } else {
       try {
-        window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
           contract.methods
             .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
             .send({
-              from: accounts[0],
+              from: auth.accounts[0],
               value: price,
             })
             .then((res) => {
@@ -96,7 +97,7 @@ function Home() {
             .catch((error) => {
               toast.dismiss(t)
             })
-        })
+    
       } catch (error) {
         console.log(error)
         toast.dismiss(t)
@@ -219,7 +220,11 @@ function Home() {
                   {token.LSP4Metadata.images.length > 0 ? (
                     <img
                       className={`rounded ms-depth-16`}
-                      src={`${token.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 ? import.meta.env.VITE_IPFS_GATEWAY + token.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '') : token.LSP4Metadata.images[0][0].url}`}
+                      src={`${
+                        token.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 && token.LSP4Metadata?.images[0][0].url.search(`data:`) === -1
+                          ? import.meta.env.VITE_IPFS_GATEWAY + token.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '')
+                          : token.LSP4Metadata.images[0][0].url
+                      }`}
                     />
                   ) : (
                     <img className={`rounded ms-depth-16`} alt={``} title={``} src={`${import.meta.env.VITE_IPFS_GATEWAY + `bafkreif5hdukwj7hnuxc5o53bjfkd3im4d7ygeah4a77i5ut5ke3zyj4lu`}`} />
@@ -240,7 +245,7 @@ function Home() {
             <div className={`d-flex flex-row align-items-center justify-content-between grid--gap-025 w-100`}>
               <div>
                 <small>{_.fromWei(token.info.price, `ether`)}</small>
-                <span>{token['info'].token === `0x0000000000000000000000000000000000000000` ? <>⏣LYX</> : <span className={`badge badge-pill badge-primary ml-10`}> ${token['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
+                <span>{token['info'].token === `0x0000000000000000000000000000000000000000` ? <i> ⏣LYX</i> : <span className={`badge badge-pill badge-primary ml-10`}> ${token['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
               </div>
               <button className={`btn`} onClick={(e) => buy(e, token.info)}>
                 {token.info.token === `0x0000000000000000000000000000000000000000` ? 'Buy now' : 'Approve & buy'}
