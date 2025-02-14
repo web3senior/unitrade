@@ -16,7 +16,7 @@ import { useLocation } from 'react-router'
 function Admin() {
   const [isLoading, setIsLoading] = useState(false)
   const [listedTokens, setListedTokens] = useState([])
-
+  const [tokenIds, setTokenIds] = useState([])
   const auth = useAuth()
   const frmListRef = useRef()
   const location = useLocation()
@@ -189,6 +189,15 @@ function Admin() {
     document.querySelector(`[name="token"]`).value = info.token
   }
 
+  const getCollectionIds = async (e) =>{
+    setIsLoading(true)
+    console.log(e.target.value)
+    const contractLSP8 = new web3.eth.Contract(LSP8ABI, e.target.value)
+    const isAuthorizedOperator = await contractLSP8.methods.tokenIdsOf(`${auth.contextAccounts[0]}`).call()
+setTokenIds(isAuthorizedOperator)
+setIsLoading(false)
+  }
+
   useEffect(() => {
     getListedTokens().then((res) => {
       console.log(`listedTokens`, res)
@@ -335,13 +344,23 @@ function Admin() {
               {/* {errors?.email && <span>{errors.email}</span>} */}
               <form ref={frmListRef} onSubmit={(e) => listToken(e)} className={`form d-flex flex-column`} style={{ rowGap: '1rem' }}>
                 <div>
-                  <label htmlFor="">Collection:</label>
-                  <input type="text" name="collection" placeholder="Collection contract address" />
+                  <label htmlFor="">Collection(contract address):</label>
+                  <input type="text" name="collection" placeholder="Collection contract address" onChange={(e)=>getCollectionIds(e)}/>
+                  <small>{isLoading && <>Fetching...</>}</small>
                 </div>
 
                 <div>
                   <label htmlFor="">Token id:</label>
-                  <input type="text" name="tokenId" placeholder="Token Id" required />
+                  <select id="tokens" name="tokenId">
+                  {tokenIds.length > 0 &&
+                    tokenIds.map((item, i) => {
+                      return (
+                        <option key={i} value={`${item}`}>
+                          {item}
+                        </option>
+                      )
+                    })}
+                </select>
                 </div>
 
                 <div>
