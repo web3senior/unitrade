@@ -392,7 +392,7 @@ function Admin() {
                   <input type="text" name="referralFee" placeholder="Price" defaultValue={0} required />
                 </div>
 
-                <button className="mt-20 btn" type="submit">
+                <button className="mt-20 btn" type="submit" disabled={tokenIds.length ===0}>
                   Approve & List
                 </button>
               </form>
