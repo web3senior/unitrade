@@ -32,12 +32,49 @@ function Admin() {
   }
 
   const getListingPool = async (_collection, _tokenId) => await contract.methods.listingPool(_collection, _tokenId).call()
-  const getListedTokens = async () => await contract.methods.getListedTokens(`${auth.contextAccounts[0]}`).call()
+  const getListedTokens = async () => await contract.methods.getListedTokens(`0x0D5C8B7cC12eD8486E1E0147CC0c3395739F138d`).call()
   const getTradePoolfunc = async (_collection, _tokenId) => await contract.methods.getTradePool(_collection, _tokenId).call()
 
-  const getTokenData = async (_collection, _tokenId) => {
-    const contractLSP8 = new web3.eth.Contract(LSP8ABI, _collection)
-    return await contractLSP8.methods.getDataForTokenId(`${_tokenId}`, '0x9afb95cacc9f95858ec44aa8c3b685511002e30ae54415823f406128b85b238e').call()
+  // const getTokenData = async (_collection, _tokenId) => {
+  //   const contractLSP8 = new web3.eth.Contract(LSP8ABI, _collection)
+  //   return await contractLSP8.methods.getDataForTokenId(`${_tokenId}`, '0x9afb95cacc9f95858ec44aa8c3b685511002e30ae54415823f406128b85b238e').call()
+  // }
+
+  async function getTokenData(collection, tokenId) {
+    collection = collection.toString().toLowerCase()
+    tokenId = tokenId.toString().toLowerCase()
+
+    let myHeaders = new Headers()
+    myHeaders.append('Content-Type', `application/json`)
+    myHeaders.append('Accept', `application/json`)
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify({
+        query: `query MyQuery {
+  Token(
+    where: {lsp8ReferenceContract_id: {_eq: "${collection}"}, _and: {tokenId: {_eq: "${tokenId}"}}}
+  ) {
+    id
+    lsp4TokenName
+    name
+    tokenId
+    lsp8ReferenceContract_id
+    images {
+      src
+    }
+  }
+}`,
+      }),
+    }
+
+    const response = await fetch(`${import.meta.env.VITE_LUKSO_API_ENDPOINT}`, requestOptions)
+    if (!response.ok) {
+      return { result: false, message: `Failed to fetch query` }
+    }
+    const data = await response.json()
+    return data
   }
 
   async function get_lsp7(contract) {
@@ -203,43 +240,30 @@ function Admin() {
       console.log(`listedTokens`, res)
 
       res.data.map((item, i) => {
-        getTradePoolfunc(item['collection'], item['tokenId']).then((res) => {
-          console.log(res)
-        })
+        // getTradePoolfunc(item['collection'], item['tokenId']).then((res) => {
+        //   console.log(res)
+        // })
 
-        getTokenData(item[0], item[1]).then((data) => {
+        getTokenData(item['collection'], item['tokenId']).then((data) => {
+          data.info = item
+          console.log(data)
           try {
-            // console.log(data)
-            if (_.isHex(data)) {
-              data = web3.utils.hexToAscii(data)
-              data = data.slice(data.search(`data:application/json;`), data.length)
+            if (item[`token`].toString().toLowerCase() !== `0x0000000000000000000000000000000000000000`) {
+              get_lsp7(item[`token`]).then((result) => {
+                console.log(result)
+                data.tokenInfo = result
 
-              // Read the data url
-
-              fetchData(data).then((dataContent) => {
-                console.log(dataContent)
-                dataContent.info = item
-                console.log(dataContent)
-
-                // get token data
-                if (item[2].toString() !== `0x0000000000000000000000000000000000000000`) {
-                  get_lsp7(item[2]).then((result) => {
-                    dataContent.tokenInfo = result
-
-                    getListingPool(item[0], item[1]).then((result) => {
-                      dataContent.market = result
-                      setListedTokens((token) => token.concat(dataContent))
-                    })
-                  })
-                } else {
-                  getListingPool(item[0], item[1]).then((result) => {
-                    dataContent.market = result
-                    setListedTokens((token) => token.concat(dataContent))
-                  })
-                }
+                getListingPool(item['collection'], item['tokenId']).then((result) => {
+                  console.log(`result`, market)
+                  data.market = result
+                  setListedTokens((token) => token.concat(data))
+                })
               })
             } else {
-              setListedTokens((token) => [{ info: item }])
+              getListingPool(item['collection'], item['tokenId']).then((result) => {
+                data.market = result
+                setListedTokens((token) => token.concat(data))
+              })
             }
           } catch (error) {
             console.log(error)
@@ -280,25 +304,9 @@ function Admin() {
                     return (
                       <tr key={i} className={`animate__animated animate__fadeInUp`} style={{ animationDelay: `${i / 10}s`, '--animate-duration': `400ms` }}>
                         <td className={`d-flex align-items-center`} style={{ columnGap: `1rem` }}>
-                          {item.LSP4Metadata.images.length > 0 && (
-                            <>
-                              {item.LSP4Metadata.images.length > 0 ? (
-                                <img
-                                  className={`rounded ms-depth-16`}
-                                  style={{ width: `48px` }}
-                                  src={`${
-                                    item.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 && item.LSP4Metadata?.images[0][0].url.search(`data:`) === -1
-                                      ? import.meta.env.VITE_IPFS_GATEWAY + item.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '')
-                                      : item.LSP4Metadata.images[0][0].url
-                                  }`}
-                                />
-                              ) : (
-                                <img className={`rounded ms-depth-16`} alt={``} title={``} src={`${import.meta.env.VITE_IPFS_GATEWAY + `bafkreif5hdukwj7hnuxc5o53bjfkd3im4d7ygeah4a77i5ut5ke3zyj4lu`}`} />
-                              )}
-                            </>
-                          )}
+                          <img className={`rounded ms-depth-16`} style={{ width: `48px` }} src={`${item.data.Token[0].images[0].src}`} />
                           <span className={`badge badge-dark`}>
-                            {item['info'].tokenId.slice(0, 6)}...{item['info'].tokenId.slice(62)}
+                            {item['info']?.tokenId.slice(0, 6)}...{item['info']?.tokenId.slice(62)}
                           </span>
                         </td>
                         <td>
@@ -306,11 +314,11 @@ function Admin() {
                           {item['info'].token === `0x0000000000000000000000000000000000000000` ? <>⏣LYX</> : <span className={`badge badge-pill badge-primary ml-10`}> ${item['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}
                         </td>
                         <td>{item['info'].referralFee} %</td>
-                        <td>{item['market'].referral} %</td>
+                        <td>{item['market']?.referral} %</td>
                         <td>
                           {item['info'].status ? <span className={`badge badge-success`}>Listed</span> : <span className={`badge badge--danger`}>Canceled/ Sold out</span>}
                           <br />
-                          {item['market'].status ? <span className={`badge badge-success`}>In market</span> : <span className={`badge badge--danger`}>Sold out</span>}
+                          {item['market']?.status ? <span className={`badge badge-success`}>In market</span> : <span className={`badge badge--danger`}>Sold out</span>}
                         </td>
 
                         <td className={`d-flex flex-column grid--gap-025`}>
