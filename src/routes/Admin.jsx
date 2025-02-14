@@ -129,60 +129,33 @@ function Admin() {
     const isAuthorizedOperator = await contractLSP8.methods.isOperatorFor(import.meta.env.VITE_CONTRACT, tokenId).call()
 
     try {
-     // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
-        // Approve tokenId
+      // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+      // Approve tokenId
 
-        if (!isAuthorizedOperator) {
-          //Authorize then list
-          contractLSP8.methods
-            .authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x')
-            .send({ from: auth.accounts[0] })
-            .then((res) => {
-              console.log(`authorizeOperator result =>`, res)
+      if (!isAuthorizedOperator) {
+        //Authorize then list
+        const authResult = await contractLSP8.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x').send({ from: auth.accounts[0] })
 
-              // List token
-              contract.methods
-                .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
-                .send({
-                  from: auth.accounts[0],
-                })
-                .then((res) => {
-                  console.log(res) //res.events.tokenId
+        console.log(`authorizeOperator result =>`, authResult)
 
-                  setIsLoading(true)
+        // List token
+        const listResult = await contract.methods.list(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
+        console.log(listResult) //res.events.tokenId
+        toast.success(`Done`)
+        window.location.reload()
 
-                  toast.success(`Done`)
-                  toast.dismiss(t)
-                })
-                .catch((error) => {
-                  toast.dismiss(t)
-                })
-            })
-            .catch((error) => {
-              console.log(`authorizeOperator error =>`, error)
-              toast.dismiss(t)
-            })
-        } else {
-          // List token
-          contract.methods
-            .list(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
-            .send({
-              from: auth.accounts[0],
-            })
-            .then((res) => {
-              console.log(res) //res.events.tokenId
+        toast.dismiss(t)
+      } else {
+        // List token
+        const listResult = await contract.methods.list(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
+        console.log(listResult) //res.events.tokenId
+        toast.success(`Done`)
+        window.location.reload()
 
-              setIsLoading(true)
+        toast.dismiss(t)
+      }
 
-              toast.success(`Done`)
-              toast.dismiss(t)
-            })
-            .catch((error) => {
-              toast.dismiss(t)
-            })
-        }
-        
-     // })
+      // })
     } catch (error) {
       console.log(error)
       toast.dismiss(t)
@@ -230,6 +203,7 @@ function Admin() {
 
   const getCollectionIds = async (e) => {
     setIsLoading(true)
+    if(e.target.value=== '')setTokenIds([])
     console.log(e.target.value, `${auth.contextAccounts[0]}`)
     const contractLSP8 = new web3.eth.Contract(LSP8ABI, e.target.value.toLowerCase())
     const isAuthorizedOperator = await contractLSP8.methods.tokenIdsOf(`${auth.contextAccounts[0]}`).call()
@@ -355,7 +329,7 @@ function Admin() {
               {/* {errors?.email && <span>{errors.email}</span>} */}
               <form ref={frmListRef} onSubmit={(e) => listToken(e)} className={`form d-flex flex-column`} style={{ rowGap: '1rem' }}>
                 <div>
-                  <label htmlFor="">Collection(contract address):</label>
+                  <label htmlFor="">Collection (LSP8 contract address):</label>
                   <input type="text" name="collection" placeholder="Collection contract address" onChange={(e) => getCollectionIds(e)} />
                   <small>{isLoading && <>Fetching...</>}</small>
                 </div>
@@ -392,7 +366,7 @@ function Admin() {
                   <input type="text" name="referralFee" placeholder="Price" defaultValue={0} required />
                 </div>
 
-                <button className="mt-20 btn" type="submit" disabled={tokenIds.length ===0}>
+                <button className="mt-20 btn" type="submit" disabled={tokenIds.length === 0}>
                   Approve & List
                 </button>
               </form>
