@@ -219,7 +219,7 @@ function Home() {
                 <figure>
                   {token.LSP4Metadata.images.length > 0 ? (
                     <img
-                      className={`rounded ms-depth-16`}
+                      className={`ms-depth-16`}
                       src={`${
                         token.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 && token.LSP4Metadata?.images[0][0].url.search(`data:`) === -1
                           ? import.meta.env.VITE_IPFS_GATEWAY + token.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '')
@@ -227,7 +227,7 @@ function Home() {
                       }`}
                     />
                   ) : (
-                    <img className={`rounded ms-depth-16`} alt={``} title={``} src={`${import.meta.env.VITE_IPFS_GATEWAY + `bafkreif5hdukwj7hnuxc5o53bjfkd3im4d7ygeah4a77i5ut5ke3zyj4lu`}`} />
+                    <img className={`ms-depth-16`} alt={``} title={``} src={`${import.meta.env.VITE_IPFS_GATEWAY + `bafkreif5hdukwj7hnuxc5o53bjfkd3im4d7ygeah4a77i5ut5ke3zyj4lu`}`} />
                   )}
                 </figure>
               )}
