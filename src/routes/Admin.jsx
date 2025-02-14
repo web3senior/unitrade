@@ -61,6 +61,8 @@ function Admin() {
     name
     tokenId
     lsp8ReferenceContract_id
+          lsp4TokenSymbol
+    description
     images {
       src
     }
@@ -254,7 +256,7 @@ function Admin() {
                 data.tokenInfo = result
 
                 getListingPool(item['collection'], item['tokenId']).then((result) => {
-                  console.log(`result`, market)
+                  console.log(`result`, result)
                   data.market = result
                   setListedTokens((token) => token.concat(data))
                 })

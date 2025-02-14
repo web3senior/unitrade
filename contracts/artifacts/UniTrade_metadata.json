@@ -1192,11 +1192,11 @@
 			]
 		},
 		"UniTrade.sol": {
-			"keccak256": "0x35b6e75578c9b4f8e2d10e1e89efe9d2ae1af76bc5be221f8c15d8f5b57cdabb",
+			"keccak256": "0xb48fd8119a98b9b2550d653784c2411e8b5ccfd6e54d72a9c541651d62bd289f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9c2e0b815a42b36b61a72a8dc0f11019866f60e372d2a3e1c56feb8fe40340fc",
-				"dweb:/ipfs/QmQaJTFHveasVpbSjjgWYR9waY4ZgmLNKj1N6PwmSYTCnD"
+				"bzz-raw://be8cd45b25217ce1c907bd1fd5d0e14f8879f618d57934cdf33497e2d8fef3a4",
+				"dweb:/ipfs/QmNdGTXbGLf84NsephRnq5GCb4Kskkc5LScnsmbvg1RtiN"
 			]
 		},
 		"_errors.sol": {

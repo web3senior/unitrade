@@ -272,6 +272,8 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         // Transfer
         transferToken(_collection, _tokenId, _force, _data);
 
+        // ToDo: reset authorizedOperator: not sure the transfer function does that
+
         // Log
         emit SoldOut(_collection, _tokenId, item.token, item.price, address(COLLECTION.tokenOwnerOf(_tokenId)), _msgSender(), _referral, item.referralFee, block.timestamp);
         return true;

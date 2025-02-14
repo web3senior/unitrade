@@ -78,6 +78,7 @@ function Home() {
       }
     } else {
       try {
+
           contract.methods
             .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
             .send({
@@ -103,6 +104,44 @@ function Home() {
         toast.dismiss(t)
       }
     }
+  }
+  async function getTokenData(collection, tokenId) {
+    collection = collection.toString().toLowerCase()
+    tokenId = tokenId.toString().toLowerCase()
+
+    let myHeaders = new Headers()
+    myHeaders.append('Content-Type', `application/json`)
+    myHeaders.append('Accept', `application/json`)
+
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify({
+        query: `query MyQuery {
+  Token(
+    where: {lsp8ReferenceContract_id: {_eq: "${collection}"}, _and: {tokenId: {_eq: "${tokenId}"}}}
+  ) {
+    id
+    lsp4TokenName
+    name
+    tokenId
+    lsp8ReferenceContract_id
+          lsp4TokenSymbol
+    description
+    images {
+      src
+    }
+  }
+}`,
+      }),
+    }
+
+    const response = await fetch(`${import.meta.env.VITE_LUKSO_API_ENDPOINT}`, requestOptions)
+    if (!response.ok) {
+      return { result: false, message: `Failed to fetch query` }
+    }
+    const data = await response.json()
+    return data
   }
 
   const fetchData = async (dataURL) => {
@@ -148,39 +187,30 @@ function Home() {
     return data
   }
 
-  const getTokenData = async (_collection, _tokenId) => {
-    const contractLSP8 = new web3.eth.Contract(LSP8ABI, _collection)
-    return await contractLSP8.methods.getDataForTokenId(`${_tokenId}`, '0x9afb95cacc9f95858ec44aa8c3b685511002e30ae54415823f406128b85b238e').call()
-  }
+  // const getTokenData = async (_collection, _tokenId) => {
+  //   const contractLSP8 = new web3.eth.Contract(LSP8ABI, _collection)
+  //   return await contractLSP8.methods.getDataForTokenId(`${_tokenId}`, '0x9afb95cacc9f95858ec44aa8c3b685511002e30ae54415823f406128b85b238e').call()
+  // }
 
   useEffect(() => {
     getListingPool(searchParams.get(`collection`), searchParams.get(`token_id`)).then((res) => {
       console.log(res)
-      getTokenData(searchParams.get(`collection`), searchParams.get(`token_id`)).then((data) => {
-        // console.log(res)
-        if (_.isHex(data)) {
-          data = web3.utils.hexToAscii(data)
-          data = data.slice(data.search(`data:application/json;`), data.length)
 
-          // Read the data url
-          fetchData(data).then((dataContent) => {
-            dataContent.info = res
-            console.log(dataContent)
-            // setToken(dataContent)
+        getTokenData(searchParams.get(`collection`), searchParams.get(`token_id`)).then((nftData) => {
 
-            // get token data
-            if (res.token.toString() !== `0x0000000000000000000000000000000000000000`) {
-              get_lsp7(res.token).then((result) => {
-                dataContent.tokenInfo = result
-                setToken(dataContent)
-              })
-            } else {
-              setToken(dataContent)
-            }
+          nftData.info = res
+
+        if (res.token.toString() !== `0x0000000000000000000000000000000000000000`) {
+          get_lsp7(res.token).then((result) => {
+            nftData.tokenInfo = result
+            setToken(nftData)
           })
         } else {
-          setToken((token) => [{ info: res }])
+          setToken(nftData)
         }
+
+        console.log(nftData)
+
       })
     })
 
@@ -212,33 +242,22 @@ function Home() {
       )}
       {token && token.info.status === false && <div className={`${styles.soldout}`}>Sold Out</div>}
       {token &&
-        (token.LSP4Metadata ? (
+        (token.data ? (
           <>
             <div className={`${styles['item']}  animate__animated animate__fadeInUp`}>
-              {token.LSP4Metadata.images.length > 0 && (
+           
                 <figure>
-                  {token.LSP4Metadata.images.length > 0 ? (
-                    <img
-                      className={`ms-depth-16`}
-                      src={`${
-                        token.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 && token.LSP4Metadata?.images[0][0].url.search(`data:`) === -1
-                          ? import.meta.env.VITE_IPFS_GATEWAY + token.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '')
-                          : token.LSP4Metadata.images[0][0].url
-                      }`}
-                    />
-                  ) : (
-                    <img className={`ms-depth-16`} alt={``} title={``} src={`${import.meta.env.VITE_IPFS_GATEWAY + `bafkreif5hdukwj7hnuxc5o53bjfkd3im4d7ygeah4a77i5ut5ke3zyj4lu`}`} />
-                  )}
+                <img className={`ms-depth-16`} src={`${token.data.Token[0].images[0].src}`} />
                 </figure>
-              )}
+            
 
               <div className={`${styles['item__body']}`}>
                 <div className={`d-flex flex-row grid--gap-025`}>
-                  <b>{token.LSP4Metadata.name}</b>
+                  <b>{token.data.Token[0].lsp4TokenName}</b>
                   <img alt={`verified`} src={VerifiedBadge} />
                 </div>
 
-                <p>{token.LSP4Metadata.description.slice(0, 110)}...</p>
+                <p>{token.data.Token[0].description.slice(0, 110)}...</p>
               </div>
             </div>
 
