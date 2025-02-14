@@ -89,7 +89,6 @@ function Admin() {
 
     const isAuthorizedOperator = await contractLSP8.methods.isOperatorFor(import.meta.env.VITE_CONTRACT, tokenId).call()
 
-
     try {
       window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
         // Approve tokenId
@@ -189,13 +188,14 @@ function Admin() {
     document.querySelector(`[name="token"]`).value = info.token
   }
 
-  const getCollectionIds = async (e) =>{
+  const getCollectionIds = async (e) => {
     setIsLoading(true)
-    console.log(e.target.value)
-    const contractLSP8 = new web3.eth.Contract(LSP8ABI, e.target.value)
+    console.log(e.target.value, `${auth.contextAccounts[0]}`)
+    const contractLSP8 = new web3.eth.Contract(LSP8ABI, e.target.value.toLowerCase())
     const isAuthorizedOperator = await contractLSP8.methods.tokenIdsOf(`${auth.contextAccounts[0]}`).call()
-setTokenIds(isAuthorizedOperator)
-setIsLoading(false)
+    console.log(isAuthorizedOperator)
+    setTokenIds(isAuthorizedOperator)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -345,22 +345,22 @@ setIsLoading(false)
               <form ref={frmListRef} onSubmit={(e) => listToken(e)} className={`form d-flex flex-column`} style={{ rowGap: '1rem' }}>
                 <div>
                   <label htmlFor="">Collection(contract address):</label>
-                  <input type="text" name="collection" placeholder="Collection contract address" onChange={(e)=>getCollectionIds(e)}/>
+                  <input type="text" name="collection" placeholder="Collection contract address" onChange={(e) => getCollectionIds(e)} />
                   <small>{isLoading && <>Fetching...</>}</small>
                 </div>
 
                 <div>
                   <label htmlFor="">Token id:</label>
                   <select id="tokens" name="tokenId">
-                  {tokenIds.length > 0 &&
-                    tokenIds.map((item, i) => {
-                      return (
-                        <option key={i} value={`${item}`}>
-                          {item}
-                        </option>
-                      )
-                    })}
-                </select>
+                    {tokenIds.length > 0 &&
+                      tokenIds.map((item, i) => {
+                        return (
+                          <option key={i} value={`${item}`}>
+                            {item}
+                          </option>
+                        )
+                      })}
+                  </select>
                 </div>
 
                 <div>
