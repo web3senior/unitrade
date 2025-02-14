@@ -1,7 +1,7 @@
 @use 'abstract' as *;
 @use 'components' as *;
-@use './../../node_modules/office-ui-fabric-core/src/sass/Fabric.scss';
-@use './../../node_modules/animate.css/animate.min.css';
+// @use './../../node_modules/office-ui-fabric-core/src/sass/Fabric.scss';
+// @use './../../node_modules/animate.css/animate.min.css';
 
 @mixin no-select() {
   -webkit-tap-highlight-color: transparent;
