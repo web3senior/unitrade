@@ -21,7 +21,7 @@ createRoot(root).render(
           </AuthProvider>
         }
       />
-      <Route path="admin" element={<Admin />} />
+      <Route path="admin" element={  <AuthProvider><Admin /></AuthProvider>} />
     </Routes>
   </BrowserRouter>
 )

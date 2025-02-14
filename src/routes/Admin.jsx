@@ -3,14 +3,15 @@ import toast, { Toaster } from 'react-hot-toast'
 import ABI from './../abi/unitrade.json'
 import LSP8ABI from './../abi/lsp8.json'
 import LSP7ABI from './../abi/lsp7.json'
-import { useAuth, provider } from './../contexts/AuthContext'
+import ClipboardJS from 'clipboard'
+import { web3, contract, useAuth, _, provider } from './../contexts/AuthContext'
 import Web3 from 'web3'
 import styles from './Admin.module.scss'
 import { useLocation } from 'react-router'
 
-const web3 = new Web3(window.lukso)
-const contract = new web3.eth.Contract(ABI, import.meta.env.VITE_CONTRACT)
-const _ = web3.utils
+// const web3 = new Web3(window.lukso)
+// const contract = new web3.eth.Contract(ABI, import.meta.env.VITE_CONTRACT)
+// const _ = web3.utils
 
 function Admin() {
   const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +32,7 @@ function Admin() {
   }
 
   const getListingPool = async (_collection, _tokenId) => await contract.methods.listingPool(_collection, _tokenId).call()
-  const getListedTokens = async () => await contract.methods.getListedTokens(`0x188eeC07287D876a23565c3c568cbE0bb1984b83`).call()
+  const getListedTokens = async () => await contract.methods.getListedTokens(`${auth.contextAccounts[0]}`).call()
   const getTradePoolfunc = async (_collection, _tokenId) => await contract.methods.getTradePool(_collection, _tokenId).call()
 
   const getTokenData = async (_collection, _tokenId) => {
@@ -160,32 +161,16 @@ function Admin() {
     document.querySelector(`[name="tokenId"]`).value = info.tokenId
     document.querySelector(`[name="price"]`).value = _.fromWei(info.price, `ether`)
     document.querySelector(`[name="referralFee"]`).value = info.referralFee
-     document.querySelector(`[name="token"]`).value = info.token
+    document.querySelector(`[name="token"]`).value = info.token
   }
-    const copyEmbedLink = (e, info) => {
-      console.log(`${window.location.host}?collection=${info.collection}&token_id=${info.tokenId}`)
-      navigator.clipboard.writeText(`https://${window.location.host}?collection=${info.collection}&token_id=${info.tokenId}`).then(
-        () => {
-          /* clipboard successfully set */
-          toast(`Copied`)
-        },
-        () => {
-          /* clipboard write failed */
-          toast(`Error`)
-        },
-      );
-  }
+
+
   useEffect(() => {
-
- 
-
     getListedTokens().then((res) => {
-      console.log(res)
+      console.log(`listedTokens`, res)
 
       res.data.map((item, i) => {
-
-   
-        getTradePoolfunc(item['collection'], item['tokenId']).then(res=>{
+        getTradePoolfunc(item['collection'], item['tokenId']).then((res) => {
           console.log(res)
         })
 
@@ -197,7 +182,9 @@ function Admin() {
               data = data.slice(data.search(`data:application/json;`), data.length)
 
               // Read the data url
+         
               fetchData(data).then((dataContent) => {
+                console.log(dataContent)
                 dataContent.info = item
                 console.log(dataContent)
 
@@ -230,6 +217,8 @@ function Admin() {
       //  setListedTokens(res.data)
       //
     })
+
+    new ClipboardJS('.btn');
   }, [])
 
   return (
@@ -265,7 +254,12 @@ function Admin() {
                                   className={`rounded ms-depth-16`}
                                   style={{ width: `48px` }}
                                   src={`${
-                                    item.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 ? import.meta.env.VITE_IPFS_GATEWAY + item.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '') : item.LSP4Metadata.images[0][0].url
+                                     
+ (item.LSP4Metadata?.images[0][0].url.search(`https://`) === -1 && item.LSP4Metadata?.images[0][0].url.search(`data:`) === -1 )
+                                    ?  
+import.meta.env.VITE_IPFS_GATEWAY + item.LSP4Metadata.images[0][0].url.replace('ipfs://', '').replace('://', '')
+                                  : 
+                                  item.LSP4Metadata.images[0][0].url
                                   }`}
                                 />
                               ) : (
@@ -281,12 +275,8 @@ function Admin() {
                           {_.fromWei(item['info'].price, `ether`)}
                           {item['info'].token === `0x0000000000000000000000000000000000000000` ? <>⏣LYX</> : <span className={`badge badge-pill badge-primary ml-10`}> ${item['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}
                         </td>
-                        <td>
-                          {item['info'].referralFee} %
-                        </td>
-                        <td>
-                          {item['market'].referral} %
-                        </td>
+                        <td>{item['info'].referralFee} %</td>
+                        <td>{item['market'].referral} %</td>
                         <td>
                           {item['info'].status ? <span className={`badge badge-success`}>Listed</span> : <span className={`badge badge--danger`}>Canceled/ Sold out</span>}
                           <br />
@@ -300,9 +290,11 @@ function Admin() {
                           <button className={`btn`} style={{ background: `orange` }} onClick={(e) => updateItem(e, item['info'])}>
                             Update
                           </button>
-                          <button className={`btn`} style={{ background: `royalblue` }} onClick={(e)=>copyEmbedLink(e, item['info'])}>
+                          <input type={`hidden`} id={`itemURL${i}`} value={`${window.location.host}?collection=${item['info'].collection}&token_id=${item['info'].tokenId}`}/>
+                          <button className={`btn`} style={{ background: `royalblue` }}  data-clipboard-target={`#itemURL${i}`}>
                             Copy Embed Link
                           </button>
+                          {/* onClick={(e) => copyEmbedLink(e, item['info'])} */}
                         </td>
                       </tr>
                     )

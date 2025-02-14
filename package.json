@@ -13,6 +13,7 @@
     "@lukso/lsp-smart-contracts": "^0.16.2",
     "@lukso/up-provider": "^0.3.2",
     "animate.css": "^4.1.1",
+    "clipboard": "^2.0.11",
     "office-ui-fabric-core": "^11.1.0",
     "party-js": "^2.2.0",
     "react": "^19.0.0",
