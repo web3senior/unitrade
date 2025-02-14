@@ -12,7 +12,7 @@ import { createClientUPProvider } from '@lukso/up-provider'
 export const AuthContext = React.createContext()
 export const provider = createClientUPProvider()
 // export const PROVIDER = import.meta.env.NEXT_PUBLIC_RPC_URL
-export const web3 = new Web3(window.lukso)//window.lukso
+export const web3 = new Web3(provider)
 export const contract = new web3.eth.Contract(ABI, import.meta.env.VITE_CONTRACT)
 export const _ = web3.utils
 
@@ -179,6 +179,6 @@ export function AuthProvider({ children }) {
     connect,
   }
 
- // if (!profileConnected) return <Loading />
+ if (!profileConnected) return <Loading />
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

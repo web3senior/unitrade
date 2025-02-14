@@ -335,7 +335,7 @@ function Admin() {
                   Purchase Token:
                   <select name="token" id="">
                     <option value="0x0000000000000000000000000000000000000000">⏣LYX</option>
-                    <option value="0x39F73B9C8D4E370fD9ff22C932eD58009680aff0">$PEPITO</option>
+                    <option value="0xf76253bddf123543716092e77fc08ba81d63ff38">$FISH</option>
                   </select>
                 </div>
 

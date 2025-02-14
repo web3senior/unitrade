@@ -50,7 +50,7 @@ function Home() {
 
             // List token
             contract.methods
-            .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `0xc1A411B2F0332C86c90Af22f5367A0265bCB1Df9`, true, '0x')
+            .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
               .send({
                 from: accounts[0],
               })
@@ -78,7 +78,7 @@ function Home() {
       try {
         window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
           contract.methods
-            .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `0xc1A411B2F0332C86c90Af22f5367A0265bCB1Df9`, true, '0x')
+            .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
             .send({
               from: accounts[0],
               value: price,

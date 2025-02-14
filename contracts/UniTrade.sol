@@ -90,10 +90,6 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         return true;
     }
 
-    // function getListedTokens(address _seller) public view returns (UserListingStruct[] memory data) {
-    //     return  userListingPool[_seller];
-    // }
-
     function getListedTokens(address _seller) public view returns (uint256 len, UserListingStruct[] memory data) {
         return (userListingPool[_seller].length, userListingPool[_seller]);
     }
@@ -116,7 +112,8 @@ contract UniTrade is Ownable(msg.sender), Pausable {
     // tokenId: 0x0000000000000000000000000000000000000000000000000000000000000001
     // Token : 0x0000000000000000000000000000000000000000
     // Price: 1000000000000000000  = 1 ether
-    ///@notice Donate
+
+    ///@notice List
     ///@dev Relisting the token causes update only the fields
     function list(
         address _collection,
@@ -189,10 +186,6 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         return [feeAmount, referralAmount, ownerAmount];
     }
 
-    // collection: 0x565BD1C5C443BC2F1C2aE6Fe06Ed0ee1ef08141D
-    // tokenId: 0x0000000000000000000000000000000000000000000000000000000000000001
-    // Token : 0x0000000000000000000000000000000000000000
-    // Price: 1000000000000000000  = 1 ether
     ///@notice buy
     function buy(
         address _collection,
@@ -275,9 +268,6 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         // Add it to tradePool to track trades
         _tradeCounter.increment();
         tradePool[bytes32(_tradeCounter.current())] = TradeStruct(_collection, _tokenId, item.token, item.price, address(COLLECTION.tokenOwnerOf(_tokenId)), _msgSender(), _referral, item.referralFee, block.timestamp);
-
-        // Remove from user listing pool
-        //userListingPool[_msgSender()][_getIndexOfItem(_collection, _tokenId)] = UserListingStruct(address(0), bytes32(0), address(0), 0, 0, block.timestamp, false);
 
         // Transfer
         transferToken(_collection, _tokenId, _force, _data);
