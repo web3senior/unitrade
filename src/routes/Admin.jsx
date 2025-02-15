@@ -18,6 +18,7 @@ function Admin() {
   const [listedTokens, setListedTokens] = useState([])
   const [tokenIds, setTokenIds] = useState([])
   const [isApproved, setIsApproved] = useState(false)
+  const [update, setUpdate] = useState(false)
   const auth = useAuth()
   const frmListRef = useRef()
   const location = useLocation()
@@ -145,6 +146,36 @@ function Admin() {
     }
   }
 
+  const handleUpdateItem = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    const t = toast.loading(`Waiting for transaction's confirmation`)
+
+    const collection = (document.querySelector(`[name="collection"]`).value = info.collection)
+    const tokenId = (document.querySelector(`[name="tokenId"]`).value = info.tokenId)
+    const token = (document.querySelector(`[name="token"]`).value = info.token)
+    const price = (document.querySelector(`[name="price"]`).value = info.price)
+    const referralFee = (document.querySelector(`[name="referralFee"]`).value = info.referralFee)
+
+    const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection)
+    try {
+      // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+      // Approve tokenId
+
+      // List token
+      const listResult = await contract.methods.update(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
+      console.log(listResult) //res.events.tokenId
+      toast.success(`Done`)
+      window.location.reload()
+
+      toast.dismiss(t)
+
+      // })
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(t)
+    }
+  }
   const cancelListing = async (e, item) => {
     console.log(item)
 
@@ -204,8 +235,7 @@ function Admin() {
     if (isAuthorizedOperator) {
       setIsApproved(true)
       toast.success(`It's approved already!`)
-    }
-    else {
+    } else {
       e.target.innerHTML = `Please wait...`
       const t = toast.loading(`Waiting for transaction's confirmation`)
       const authResult = await contractLSP8.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x').send({ from: auth.accounts[0] })
@@ -263,7 +293,7 @@ function Admin() {
     <div className={`${styles.page} ms-motion-slideDownIn`}>
       <Toaster />
       <div className={`__container`} data-width={`xlarge`}>
-      <div className={`grid grid--fit grid--gap-1 w-100`} style={{ '--data-width': `300px` }}>
+        <div className={`grid grid--fit grid--gap-1 w-100`} style={{ '--data-width': `300px` }}>
           <div className="card">
             <div className="card__header d-flex align-items-center justify-content-between">List Token & Update</div>
             <div className="card__body">
@@ -306,15 +336,26 @@ function Admin() {
                   Referral fee:
                   <input type="text" name="referralFee" placeholder="Price" defaultValue={0} required />
                 </div>
-                {!isApproved && (
-                  <button type={`button`} className="mt-20 btn" onClick={(e) => chkApprove(e)} disabled={tokenIds.length === 0}>
-                    Approve
-                  </button>
+
+                {!update && (
+                  <>
+                    {!isApproved && (
+                      <button type={`button`} className="mt-20 btn" onClick={(e) => chkApprove(e)} disabled={tokenIds.length === 0}>
+                        Approve
+                      </button>
+                    )}
+
+                    {isApproved && (
+                      <button className="mt-20 btn" type="submit">
+                        List & update
+                      </button>
+                    )}
+                  </>
                 )}
 
-                {isApproved && (
-                  <button className="mt-20 btn" type="submit">
-                    List & update
+                {update && (
+                  <button className="mt-20 btn" onClick={(e) => handleUpdateItem(e)} disabled={tokenIds.length === 0}>
+                    Update
                   </button>
                 )}
               </form>
@@ -353,7 +394,9 @@ function Admin() {
                           <small>{_.fromWei(item['info'].price, `ether`)}</small>
                           <span>{item['info'].token === `0x0000000000000000000000000000000000000000` ? <i> ⏣LYX</i> : <span className={`badge badge-pill badge-primary ml-10`}> ${item['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
                         </td>
-                        <td><span className={`badge badge-danger`}>{item['info'].referralFee} %</span></td>
+                        <td>
+                          <span className={`badge badge-danger`}>{item['info'].referralFee} %</span>
+                        </td>
                         <td>{item['market']?.referral}</td>
                         <td>
                           {item['info'].status ? <span className={`badge badge-success`}>Listed</span> : <span className={`badge badge--danger`}>Canceled/ Sold out</span>}
