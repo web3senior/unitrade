@@ -32,7 +32,7 @@ function Admin() {
   }
 
   const getListingPool = async (_collection, _tokenId) => await contract.methods.listingPool(_collection, _tokenId).call()
-  const getListedTokens = async () => await contract.methods.getListedTokens(`0x0D5C8B7cC12eD8486E1E0147CC0c3395739F138d`).call()
+  const getListedTokens = async () => await contract.methods.getListedTokens(`${auth.contextAccounts[0]}`).call()
   const getTradePoolfunc = async (_collection, _tokenId) => await contract.methods.getTradePool(_collection, _tokenId).call()
 
   // const getTokenData = async (_collection, _tokenId) => {
