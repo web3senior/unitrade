@@ -181,17 +181,17 @@ function Admin() {
 
   const updateItem = (e, info) => {
     document.querySelector(`[name="collection"]`).value = info.collection
-    document.querySelector(`[name="tokenId"]`).value = info.tokenId
+    getCollectionIds(info.collection)
     document.querySelector(`[name="price"]`).value = _.fromWei(info.price, `ether`)
     document.querySelector(`[name="referralFee"]`).value = info.referralFee
     document.querySelector(`[name="token"]`).value = info.token
   }
 
-  const getCollectionIds = async (e) => {
+  const getCollectionIds = async (collection) => {
     setIsLoading(true)
-    if (e.target.value === '') setTokenIds([])
-    console.log(e.target.value, `${auth.contextAccounts[0]}`)
-    const contractLSP8 = new web3.eth.Contract(LSP8ABI, e.target.value.toLowerCase())
+    if (collection === '') setTokenIds([])
+    console.log(collection, `${auth.contextAccounts[0]}`)
+    const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection.toLowerCase())
     const isAuthorizedOperator = await contractLSP8.methods.tokenIdsOf(`${auth.contextAccounts[0]}`).call()
     console.log(isAuthorizedOperator)
     setTokenIds(isAuthorizedOperator)
@@ -286,7 +286,7 @@ function Admin() {
                   {listedTokens.map((item, i) => {
                     return (
                       <tr key={i} className={`animate__animated animate__fadeInUp`} style={{ animationDelay: `${i / 10}s`, '--animate-duration': `400ms` }}>
-                        <td className={`d-flex align-items-center`} style={{ columnGap: `1rem` }}>
+                        <td className={`d-flex flex-column align-items-center`} style={{ columnGap: `1rem` }}>
                           <img className={`rounded ms-depth-16`} style={{ width: `48px`, height: `48px` }} src={`${item.data.Token[0].images[0].src}`} />
                           <span className={`badge badge-dark`}>
                             {item['info']?.tokenId.slice(0, 6)}...{item['info']?.tokenId.slice(62)}
@@ -296,8 +296,8 @@ function Admin() {
                           <small>{_.fromWei(item['info'].price, `ether`)}</small>
                           <span>{item['info'].token === `0x0000000000000000000000000000000000000000` ? <i> ⏣LYX</i> : <span className={`badge badge-pill badge-primary ml-10`}> ${item['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
                         </td>
-                        <td>{item['info'].referralFee} %</td>
-                        <td>{item['market']?.referral} %</td>
+                        <td><span className={`badge badge-danger`}>{item['info'].referralFee} %</span></td>
+                        <td>{item['market']?.referral}</td>
                         <td>
                           {item['info'].status ? <span className={`badge badge-success`}>Listed</span> : <span className={`badge badge--danger`}>Canceled/ Sold out</span>}
                           <br />
@@ -336,7 +336,7 @@ function Admin() {
               <form ref={frmListRef} onSubmit={(e) => listToken(e)} className={`form d-flex flex-column`} style={{ rowGap: '1rem' }}>
                 <div>
                   <label htmlFor="">Collection (LSP8 contract address):</label>
-                  <input type="text" name="collection" placeholder="Collection contract address" onChange={(e) => getCollectionIds(e)} />
+                  <input type="text" name="collection" placeholder="Collection contract address" onChange={(e) => getCollectionIds(e.target.value)} />
                   <small>{isLoading && <>Fetching...</>}</small>
                 </div>
 
