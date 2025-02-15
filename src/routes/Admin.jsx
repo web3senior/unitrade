@@ -147,7 +147,8 @@ function Admin() {
   }
 
   const handleUpdateItem = async (e) => {
-    setUpdate(true)
+
+    console.log(update)
     e.preventDefault()
     setIsLoading(true)
     const t = toast.loading(`Waiting for transaction's confirmation`)
@@ -209,6 +210,7 @@ function Admin() {
   }
 
   const updateItem = (e, info) => {
+    setUpdate(true)
     console.log(info, info['token'].toLowerCase())
     document.querySelector(`[name="collection"]`).value = info.collection
     getCollectionIds(info.collection)
