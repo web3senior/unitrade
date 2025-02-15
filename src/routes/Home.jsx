@@ -25,15 +25,14 @@ function Home() {
   const getListingPool = async (_collection, _tokenId) => await contractReadOnly.methods.listingPool(_collection, _tokenId).call()
 
   const getAllUserReaction = async () => await contractReadOnly.methods.getAllUserReaction(`${auth.contextAccounts[0]}`).call()
-  
-  const chkApproveLSP7 = async (e,tokenInfo) => {
+
+  const chkApproveLSP7 = async (e, tokenInfo) => {
     const contractLSP7 = new web3.eth.Contract(LSP7ABI, tokenInfo.token)
     const isAuthorizedOperator = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenInfo.price, '0x').call()
     if (isAuthorizedOperator) {
       setIsApproved(true)
       toast.success(`It's approved already!`)
-    }
-    else {
+    } else {
       e.target.innerHTML = `Please wait...`
       const t = toast.loading(`Waiting for transaction's confirmation`)
       const authResult = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, price, '0x').send({ from: auth.accounts[0] })
@@ -43,57 +42,25 @@ function Home() {
   }
 
   const buy = async (e, tokenInfo) => {
-    const price = tokenInfo.price
-
     const t = toast.loading(`Waiting for transaction's confirmation`)
 
+    // List token
+    contract.methods
+      .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, _.toHex(0))
+      .send({
+        from: auth.accounts[0],
+      })
+      .then((res) => {
+        console.log(res) //res.events.tokenId
 
-    if (tokenInfo.token.toString() !== `0x0000000000000000000000000000000000000000`) {
-  // List token
-  contract.methods
-  .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
-    .send({
-      from: auth.accounts[0],
-    })
-    .then((res) => {
-      console.log(res) //res.events.tokenId
+        setIsLoading(true)
 
-      setIsLoading(true)
-
-      toast.success(`Done`)
-      toast.dismiss(t)
-    })
-    .catch((error) => {
-      toast.dismiss(t)
-    })
-    } else {
-      try {
-
-          contract.methods
-            .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
-            .send({
-              from: auth.accounts[0],
-              value: price,
-            })
-            .then((res) => {
-              console.log(res)
-
-              toast.success(`Done`)
-              toast.dismiss(t)
-
-              party.confetti(document.body, {
-                count: party.variation.range(20, 40),
-              })
-            })
-            .catch((error) => {
-              toast.dismiss(t)
-            })
-    
-      } catch (error) {
-        console.log(error)
+        toast.success(`Done`)
         toast.dismiss(t)
-      }
-    }
+      })
+      .catch((error) => {
+        toast.dismiss(t)
+      })
   }
   async function getTokenData(collection, tokenId) {
     collection = collection.toString().toLowerCase()
@@ -186,9 +153,8 @@ function Home() {
     getListingPool(searchParams.get(`collection`), searchParams.get(`token_id`)).then((res) => {
       console.log(res)
 
-        getTokenData(searchParams.get(`collection`), searchParams.get(`token_id`)).then((nftData) => {
-
-          nftData.info = res
+      getTokenData(searchParams.get(`collection`), searchParams.get(`token_id`)).then((nftData) => {
+        nftData.info = res
 
         if (res.token.toString() !== `0x0000000000000000000000000000000000000000`) {
           get_lsp7(res.token).then((result) => {
@@ -201,7 +167,6 @@ function Home() {
         }
 
         console.log(nftData)
-
       })
     })
 
@@ -236,11 +201,9 @@ function Home() {
         (token.data ? (
           <>
             <div className={`${styles['item']}  animate__animated animate__fadeInUp`}>
-           
-                <figure>
+              <figure>
                 <img className={`ms-depth-16`} src={`${token.data.Token[0].images[0].src}`} />
-                </figure>
-            
+              </figure>
 
               <div className={`${styles['item__body']}`}>
                 <div className={`d-flex flex-row grid--gap-025`}>
@@ -257,20 +220,21 @@ function Home() {
                 <small>{_.fromWei(token.info.price, `ether`)}</small>
                 <span>{token['info'].token === `0x0000000000000000000000000000000000000000` ? <i> ⏣LYX</i> : <span className={`badge badge-pill badge-primary ml-10`}> ${token['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
               </div>
-              <Link target={`_blank`} to={`https://universaleverything.io/asset/${searchParams.get(`collection`)}/tokenId/${searchParams.get(`token_id`)}`}>View the NFT</Link>
-             
-             
-              {!isApproved && (
-                  <button type={`button`} className="mt-20 btn" onClick={(e) => chkApproveLSP7(e, token['info'])}>
-                    Approve
-                  </button>
-                )}
+              <Link target={`_blank`} to={`https://universaleverything.io/asset/${searchParams.get(`collection`)}/tokenId/${searchParams.get(`token_id`)}`}>
+                View the NFT
+              </Link>
 
-                {isApproved && (
-                  <button className="mt-20 btn" type="submit" onClick={(e) => buy(e, token.info)}>
-                    Buy now
-                  </button>
-                )}
+              {!isApproved && (
+                <button type={`button`} className="mt-20 btn" onClick={(e) => chkApproveLSP7(e, token['info'])}>
+                  Approve
+                </button>
+              )}
+
+              {isApproved && (
+                <button className="mt-20 btn" type="submit" onClick={(e) => buy(e, token.info)}>
+                  Buy now
+                </button>
+              )}
             </div>
           </>
         ) : (

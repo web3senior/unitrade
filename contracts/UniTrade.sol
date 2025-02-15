@@ -33,7 +33,7 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         bool status; // True: for sale | False: sold out and wait for new listing from the new owner
     }
 
-    mapping(address => mapping(bytes32 => ListingStruct)) public listingPool;
+    mapping(address collection => mapping(bytes32 tokenId => ListingStruct)) public listingPool;
 
     struct UserListingStruct {
         address collection;
@@ -137,8 +137,8 @@ contract UniTrade is Ownable(msg.sender), Pausable {
 
         require(_referralFee < 100 - fee, "Referral fee must be lower than platform fee");
 
-        // Check duplicated listing
-        if (listingPool[_collection][_tokenId].status) revert DuplicatedListing(_collection, _tokenId);
+        // Check duplicated listing: No need, this will update the item
+        // if (listingPool[_collection][_tokenId].status) revert DuplicatedListing(_collection, _tokenId);
 
         //ILSP8(_collection).getOperatorsOf(_tokenId)
         listingPool[_collection][_tokenId] = ListingStruct(_token, _price, _referralFee, block.timestamp, true);

@@ -126,9 +126,6 @@ function Admin() {
     const referralFee = formData.get('referralFee')
 
     const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection)
-
-    const isAuthorizedOperator = await contractLSP8.methods.isOperatorFor(import.meta.env.VITE_CONTRACT, tokenId).call()
-
     try {
       // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
       // Approve tokenId
@@ -180,11 +177,12 @@ function Admin() {
   }
 
   const updateItem = (e, info) => {
+    console.log(info, info['token'].toLowerCase())
     document.querySelector(`[name="collection"]`).value = info.collection
     getCollectionIds(info.collection)
     document.querySelector(`[name="price"]`).value = _.fromWei(info.price, `ether`)
     document.querySelector(`[name="referralFee"]`).value = info.referralFee
-    document.querySelector(`[name="token"]`).value = info.token
+    document.querySelector(`[name="token"]`).value = info['token'].toLowerCase()
   }
 
   const getCollectionIds = async (collection) => {
@@ -379,7 +377,7 @@ function Admin() {
 
                 {isApproved && (
                   <button className="mt-20 btn" type="submit">
-                    List
+                    List & update
                   </button>
                 )}
               </form>
