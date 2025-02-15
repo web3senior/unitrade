@@ -162,7 +162,7 @@ function Admin() {
 
     // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
     // Approve tokenId
-
+console.log(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
     // List token
     const listResult = await contract.methods.update(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
     console.log(listResult) //res.events.tokenId
