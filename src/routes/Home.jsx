@@ -46,7 +46,7 @@ function Home() {
 
         contractLSP7.methods
           .authorizeOperator(import.meta.env.VITE_CONTRACT, price, '0x')
-          .send({ from: accounts[0] })
+          .send({ from: auth.accounts[0] })
           .then((res) => {
             console.log(`lsp7 authorizeOperator result =>`, res)
 
@@ -54,7 +54,7 @@ function Home() {
             contract.methods
             .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
               .send({
-                from: accounts[0],
+                from: auth.accounts[0],
               })
               .then((res) => {
                 console.log(res) //res.events.tokenId
