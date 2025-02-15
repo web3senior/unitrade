@@ -257,7 +257,7 @@ function Home() {
                 <small>{_.fromWei(token.info.price, `ether`)}</small>
                 <span>{token['info'].token === `0x0000000000000000000000000000000000000000` ? <i> ⏣LYX</i> : <span className={`badge badge-pill badge-primary ml-10`}> ${token['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
               </div>
-              <Link target={`_blank`} to={`https://universaleverything.io/collection/${searchParams.get(`collection`)}`}>View Collection</Link>
+              <Link target={`_blank`} to={`https://universaleverything.io/asset/${searchParams.get(`collection`)}/tokenId/${searchParams.get(`token_id`)}`}>View the NFT</Link>
              
              
               {!isApproved && (
