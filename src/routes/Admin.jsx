@@ -293,8 +293,8 @@ function Admin() {
                           </span>
                         </td>
                         <td>
-                          {_.fromWei(item['info'].price, `ether`)}
-                          {item['info'].token === `0x0000000000000000000000000000000000000000` ? <>⏣LYX</> : <span className={`badge badge-pill badge-primary ml-10`}> ${item['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}
+                          <small>{_.fromWei(item['info'].price, `ether`)}</small>
+                          <span>{item['info'].token === `0x0000000000000000000000000000000000000000` ? <i> ⏣LYX</i> : <span className={`badge badge-pill badge-primary ml-10`}> ${item['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
                         </td>
                         <td>{item['info'].referralFee} %</td>
                         <td>{item['market']?.referral} %</td>
