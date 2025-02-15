@@ -49,6 +49,7 @@ function Home() {
       .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, _.toHex(0))
       .send({
         from: auth.accounts[0],
+        value: tokenInfo.price
       })
       .then((res) => {
         console.log(res) //res.events.tokenId

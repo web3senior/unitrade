@@ -263,6 +263,65 @@ function Admin() {
     <div className={`${styles.page} ms-motion-slideDownIn`}>
       <Toaster />
       <div className={`__container`} data-width={`xlarge`}>
+      <div className={`grid grid--fit grid--gap-1 w-100`} style={{ '--data-width': `300px` }}>
+          <div className="card">
+            <div className="card__header d-flex align-items-center justify-content-between">List Token & Update</div>
+            <div className="card__body">
+              {/* {errors?.email && <span>{errors.email}</span>} */}
+              <form ref={frmListRef} onSubmit={(e) => listToken(e)} className={`form d-flex flex-column`} style={{ rowGap: '1rem' }}>
+                <div>
+                  <label htmlFor="">Collection (LSP8 contract address):</label>
+                  <input type="text" name="collection" placeholder="Collection contract address" onChange={(e) => getCollectionIds(e.target.value)} />
+                  <small>{isLoading && <>Fetching...</>}</small>
+                </div>
+
+                <div>
+                  <label htmlFor="">Token id:</label>
+                  <select id="tokens" name="tokenId">
+                    {tokenIds.length > 0 &&
+                      tokenIds.map((item, i) => {
+                        return (
+                          <option key={i} value={`${item}`}>
+                            {item}
+                          </option>
+                        )
+                      })}
+                  </select>
+                </div>
+
+                <div>
+                  Purchase Token:
+                  <select name="token" id="">
+                    <option value="0x0000000000000000000000000000000000000000">⏣LYX</option>
+                    <option value="0xf76253bddf123543716092e77fc08ba81d63ff38">$FISH</option>
+                  </select>
+                </div>
+
+                <div>
+                  Price:
+                  <input type="text" name="price" placeholder="Price" required />
+                </div>
+
+                <div>
+                  Referral fee:
+                  <input type="text" name="referralFee" placeholder="Price" defaultValue={0} required />
+                </div>
+                {!isApproved && (
+                  <button type={`button`} className="mt-20 btn" onClick={(e) => chkApprove(e)} disabled={tokenIds.length === 0}>
+                    Approve
+                  </button>
+                )}
+
+                {isApproved && (
+                  <button className="mt-20 btn" type="submit">
+                    List & update
+                  </button>
+                )}
+              </form>
+            </div>
+          </div>
+        </div>
+
         <div className="card">
           <div className="card__header d-flex align-items-center justify-content-between">Listed tokens</div>
           <div className="card__body">
@@ -323,65 +382,6 @@ function Admin() {
             ) : (
               <>Not found any listed tokens.</>
             )}
-          </div>
-        </div>
-
-        <div className={`grid grid--fit grid--gap-1 w-100`} style={{ '--data-width': `300px` }}>
-          <div className="card">
-            <div className="card__header d-flex align-items-center justify-content-between">List Token & Update</div>
-            <div className="card__body">
-              {/* {errors?.email && <span>{errors.email}</span>} */}
-              <form ref={frmListRef} onSubmit={(e) => listToken(e)} className={`form d-flex flex-column`} style={{ rowGap: '1rem' }}>
-                <div>
-                  <label htmlFor="">Collection (LSP8 contract address):</label>
-                  <input type="text" name="collection" placeholder="Collection contract address" onChange={(e) => getCollectionIds(e.target.value)} />
-                  <small>{isLoading && <>Fetching...</>}</small>
-                </div>
-
-                <div>
-                  <label htmlFor="">Token id:</label>
-                  <select id="tokens" name="tokenId">
-                    {tokenIds.length > 0 &&
-                      tokenIds.map((item, i) => {
-                        return (
-                          <option key={i} value={`${item}`}>
-                            {item}
-                          </option>
-                        )
-                      })}
-                  </select>
-                </div>
-
-                <div>
-                  Purchase Token:
-                  <select name="token" id="">
-                    <option value="0x0000000000000000000000000000000000000000">⏣LYX</option>
-                    <option value="0xf76253bddf123543716092e77fc08ba81d63ff38">$FISH</option>
-                  </select>
-                </div>
-
-                <div>
-                  Price:
-                  <input type="text" name="price" placeholder="Price" required />
-                </div>
-
-                <div>
-                  Referral fee:
-                  <input type="text" name="referralFee" placeholder="Price" defaultValue={0} required />
-                </div>
-                {!isApproved && (
-                  <button type={`button`} className="mt-20 btn" onClick={(e) => chkApprove(e)} disabled={tokenIds.length === 0}>
-                    Approve
-                  </button>
-                )}
-
-                {isApproved && (
-                  <button className="mt-20 btn" type="submit">
-                    List & update
-                  </button>
-                )}
-              </form>
-            </div>
           </div>
         </div>
       </div>
