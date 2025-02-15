@@ -17,6 +17,7 @@ function Admin() {
   const [isLoading, setIsLoading] = useState(false)
   const [listedTokens, setListedTokens] = useState([])
   const [tokenIds, setTokenIds] = useState([])
+  const [isApproved, setIsApproved] = useState(false)
   const auth = useAuth()
   const frmListRef = useRef()
   const location = useLocation()
@@ -213,6 +214,8 @@ function Admin() {
   }
 
   useEffect(() => {
+    console.log(auth.contextAccounts[0])
+
     getListedTokens().then((res) => {
       console.log(`listedTokens`, res)
 
@@ -367,7 +370,11 @@ function Admin() {
                 </div>
 
                 <button className="mt-20 btn" type="submit" disabled={tokenIds.length === 0}>
-                  Approve & List
+                  Approve
+                </button>
+
+                <button className="mt-20 btn" type="submit" disabled={!isApproved}>
+                  List
                 </button>
               </form>
             </div>

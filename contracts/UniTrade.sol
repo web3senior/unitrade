@@ -108,6 +108,11 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         return result;
     }
 
+    // Is listed?
+    function isListed(address _collection, bytes32 _tokenId) public view returns (bool) {
+        return listingPool[_collection][_tokenId].status;
+    }
+
     // collection: 0x565BD1C5C443BC2F1C2aE6Fe06Ed0ee1ef08141D
     // tokenId: 0x0000000000000000000000000000000000000000000000000000000000000001
     // Token : 0x0000000000000000000000000000000000000000
@@ -131,6 +136,9 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         if (!COLLECTION.isOperatorFor(address(this), _tokenId)) revert NotOperator(address(this));
 
         require(_referralFee < 100 - fee, "Referral fee must be lower than platform fee");
+
+        // Check duplicated listing
+        if (listingPool[_collection][_tokenId].status) revert DuplicatedListing(_collection, _tokenId);
 
         //ILSP8(_collection).getOperatorsOf(_tokenId)
         listingPool[_collection][_tokenId] = ListingStruct(_token, _price, _referralFee, block.timestamp, true);
