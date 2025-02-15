@@ -17,6 +17,7 @@ function Home() {
   const [emoji, setEmoji] = useState([])
   const [react, setReact] = useState([])
   const [token, setToken] = useState()
+  const [isApproved, setIsApproved] = useState(false)
   const [profiles, setProfiles] = useState()
   let [searchParams] = useSearchParams()
   const auth = useAuth()
@@ -24,6 +25,22 @@ function Home() {
   const getListingPool = async (_collection, _tokenId) => await contractReadOnly.methods.listingPool(_collection, _tokenId).call()
 
   const getAllUserReaction = async () => await contractReadOnly.methods.getAllUserReaction(`${auth.contextAccounts[0]}`).call()
+  
+  const chkApproveLSP7 = async (e,tokenInfo) => {
+    const contractLSP7 = new web3.eth.Contract(LSP7ABI, tokenInfo.token)
+    const isAuthorizedOperator = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenInfo.price, '0x').call()
+    if (isAuthorizedOperator) {
+      setIsApproved(true)
+      toast.success(`It's approved already!`)
+    }
+    else {
+      e.target.innerHTML = `Please wait...`
+      const t = toast.loading(`Waiting for transaction's confirmation`)
+      const authResult = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, price, '0x').send({ from: auth.accounts[0] })
+      toast.dismiss(t)
+      e.target.innerHTML = `Approve`
+    }
+  }
 
   const buy = async (e, tokenInfo) => {
     const price = tokenInfo.price
@@ -32,50 +49,23 @@ function Home() {
 
 
     if (tokenInfo.token.toString() !== `0x0000000000000000000000000000000000000000`) {
-   
-      //approve and buy
+  // List token
+  contract.methods
+  .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
+    .send({
+      from: auth.accounts[0],
+    })
+    .then((res) => {
+      console.log(res) //res.events.tokenId
 
-      try {
-        // let accounts = await web3.eth.getAccounts()
-        // if (accounts.length === 0) await web3.eth.requestAccounts()
-        // accounts = await web3.eth.getAccounts()
-        console.log(auth.accounts[0])
- 
-        // Approve tokenId
-        const contractLSP7 = new web3.eth.Contract(LSP7ABI, tokenInfo.token)
+      setIsLoading(true)
 
-        contractLSP7.methods
-          .authorizeOperator(import.meta.env.VITE_CONTRACT, price, '0x')
-          .send({ from: auth.accounts[0] })
-          .then((res) => {
-            console.log(`lsp7 authorizeOperator result =>`, res)
-
-            // List token
-            contract.methods
-            .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, '0x')
-              .send({
-                from: auth.accounts[0],
-              })
-              .then((res) => {
-                console.log(res) //res.events.tokenId
-
-                setIsLoading(true)
-
-                toast.success(`Done`)
-                toast.dismiss(t)
-              })
-              .catch((error) => {
-                toast.dismiss(t)
-              })
-          })
-          .catch((error) => {
-            console.log(`authorizeOperator error =>`, error)
-            toast.dismiss(t)
-          })
-      } catch (error) {
-        console.log(error)
-        toast.dismiss(t)
-      }
+      toast.success(`Done`)
+      toast.dismiss(t)
+    })
+    .catch((error) => {
+      toast.dismiss(t)
+    })
     } else {
       try {
 
@@ -267,9 +257,19 @@ function Home() {
                 <span>{token['info'].token === `0x0000000000000000000000000000000000000000` ? <i> ⏣LYX</i> : <span className={`badge badge-pill badge-primary ml-10`}> ${token['tokenInfo']?.data.Asset[0].lsp4TokenSymbol}</span>}</span>
               </div>
               <Link target={`_blank`} to={`https://universaleverything.io/collection/${searchParams.get(`collection`)}`}>View Collection</Link>
-              <button className={`btn`} onClick={(e) => buy(e, token.info)}>
-                {token.info.token === `0x0000000000000000000000000000000000000000` ? 'Buy now' : 'Approve & buy'}
-              </button>
+             
+             
+              {!isApproved && (
+                  <button type={`button`} className="mt-20 btn" onClick={(e) => chkApproveLSP7(e, token['info'])}>
+                    Approve
+                  </button>
+                )}
+
+                {isApproved && (
+                  <button className="mt-20 btn" type="submit" onClick={(e) => buy(e, token.info)}>
+                    List
+                  </button>
+                )}
             </div>
           </>
         ) : (
