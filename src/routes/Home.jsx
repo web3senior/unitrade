@@ -196,6 +196,7 @@ function Home() {
             setToken(nftData)
           })
         } else {
+          setIsApproved(true)
           setToken(nftData)
         }
 
