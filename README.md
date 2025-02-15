@@ -6,7 +6,7 @@ UniTrade is a decentralized NFT marketplace built on the LUKSO blockchain, empow
 https://youtube.com/shorts/RLWl_QbFkCo 
 
 # Contract
-https://explorer.lukso.network/address/0xA2eC17f9aa5528618A75528aEF08b2EA773C4c4d
+https://explorer.lukso.network/address/0x5D35ACEc1bf6fC08c73588342f4882695311aCD2
 
 
 # UniTrade: Your LUKSO NFT Marketplace
