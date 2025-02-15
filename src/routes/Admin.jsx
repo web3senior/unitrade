@@ -284,7 +284,7 @@ function Admin() {
                     return (
                       <tr key={i} className={`animate__animated animate__fadeInUp`} style={{ animationDelay: `${i / 10}s`, '--animate-duration': `400ms` }}>
                         <td className={`d-flex align-items-center`} style={{ columnGap: `1rem` }}>
-                          <img className={`rounded ms-depth-16`} style={{ width: `48px` }} src={`${item.data.Token[0].images[0].src}`} />
+                          <img className={`rounded ms-depth-16`} style={{ width: `48px` , height:`48px` }} src={`${item.data.Token[0].images[0].src}`} />
                           <span className={`badge badge-dark`}>
                             {item['info']?.tokenId.slice(0, 6)}...{item['info']?.tokenId.slice(62)}
                           </span>
