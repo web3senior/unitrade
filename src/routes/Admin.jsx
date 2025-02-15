@@ -147,36 +147,29 @@ function Admin() {
   }
 
   const handleUpdateItem = async (e) => {
-
     console.log(update)
     e.preventDefault()
     setIsLoading(true)
     const t = toast.loading(`Waiting for transaction's confirmation`)
 
-    const collection = (document.querySelector(`[name="collection"]`).value = info.collection)
-    const tokenId = (document.querySelector(`[name="tokenId"]`).value = info.tokenId)
-    const token = (document.querySelector(`[name="token"]`).value = info.token)
-    const price = (document.querySelector(`[name="price"]`).value = info.price)
-    const referralFee = (document.querySelector(`[name="referralFee"]`).value = info.referralFee)
+    const collection = document.querySelector(`[name="collection"]`).value
+    const tokenId = document.querySelector(`[name="tokenId"]`).value
+    const token = document.querySelector(`[name="token"]`).value
+    const price = document.querySelector(`[name="price"]`).value
+    const referralFee = document.querySelector(`[name="referralFee"]`).value
 
     const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection)
-    try {
-      // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
-      // Approve tokenId
 
-      // List token
-      const listResult = await contract.methods.update(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
-      console.log(listResult) //res.events.tokenId
-      toast.success(`Done`)
-      window.location.reload()
+    // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+    // Approve tokenId
 
-      toast.dismiss(t)
+    // List token
+    const listResult = await contract.methods.update(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
+    console.log(listResult) //res.events.tokenId
+    toast.success(`Done`)
+    window.location.reload()
 
-      // })
-    } catch (error) {
-      console.log(error)
-      toast.dismiss(t)
-    }
+    toast.dismiss(t)
   }
   const cancelListing = async (e, item) => {
     console.log(item)
