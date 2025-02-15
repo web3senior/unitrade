@@ -147,6 +147,7 @@ function Admin() {
   }
 
   const handleUpdateItem = async (e) => {
+    setUpdate(true)
     e.preventDefault()
     setIsLoading(true)
     const t = toast.loading(`Waiting for transaction's confirmation`)
