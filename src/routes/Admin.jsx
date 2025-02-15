@@ -133,28 +133,13 @@ function Admin() {
       // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
       // Approve tokenId
 
-      if (!isAuthorizedOperator) {
-        //Authorize then list
-        const authResult = await contractLSP8.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x').send({ from: auth.accounts[0] })
+      // List token
+      const listResult = await contract.methods.list(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
+      console.log(listResult) //res.events.tokenId
+      toast.success(`Done`)
+      window.location.reload()
 
-        console.log(`authorizeOperator result =>`, authResult)
-
-        // List token
-        const listResult = await contract.methods.list(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
-        console.log(listResult) //res.events.tokenId
-        toast.success(`Done`)
-        window.location.reload()
-
-        toast.dismiss(t)
-      } else {
-        // List token
-        const listResult = await contract.methods.list(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
-        console.log(listResult) //res.events.tokenId
-        toast.success(`Done`)
-        window.location.reload()
-
-        toast.dismiss(t)
-      }
+      toast.dismiss(t)
 
       // })
     } catch (error) {
@@ -204,13 +189,31 @@ function Admin() {
 
   const getCollectionIds = async (e) => {
     setIsLoading(true)
-    if(e.target.value=== '')setTokenIds([])
+    if (e.target.value === '') setTokenIds([])
     console.log(e.target.value, `${auth.contextAccounts[0]}`)
     const contractLSP8 = new web3.eth.Contract(LSP8ABI, e.target.value.toLowerCase())
     const isAuthorizedOperator = await contractLSP8.methods.tokenIdsOf(`${auth.contextAccounts[0]}`).call()
     console.log(isAuthorizedOperator)
     setTokenIds(isAuthorizedOperator)
     setIsLoading(false)
+  }
+
+  const chkApprove = async (e) => {
+    const collection = document.querySelector(`[name="collection"]`).value
+    const tokenId = document.querySelector(`[name="tokenId"]`).value
+    const contractLSP8 = new web3.eth.Contract(LSP8ABI, collection)
+    const isAuthorizedOperator = await contractLSP8.methods.isOperatorFor(import.meta.env.VITE_CONTRACT, tokenId).call()
+    if (isAuthorizedOperator) {
+      setIsApproved(true)
+      toast.success(`It's approved already!`)
+    }
+    else {
+      e.target.innerHTML = `Please wait...`
+      const t = toast.loading(`Waiting for transaction's confirmation`)
+      const authResult = await contractLSP8.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenId, '0x').send({ from: auth.accounts[0] })
+      toast.dismiss(t)
+      e.target.innerHTML = `Approve`
+    }
   }
 
   useEffect(() => {
@@ -284,7 +287,7 @@ function Admin() {
                     return (
                       <tr key={i} className={`animate__animated animate__fadeInUp`} style={{ animationDelay: `${i / 10}s`, '--animate-duration': `400ms` }}>
                         <td className={`d-flex align-items-center`} style={{ columnGap: `1rem` }}>
-                          <img className={`rounded ms-depth-16`} style={{ width: `48px` , height:`48px` }} src={`${item.data.Token[0].images[0].src}`} />
+                          <img className={`rounded ms-depth-16`} style={{ width: `48px`, height: `48px` }} src={`${item.data.Token[0].images[0].src}`} />
                           <span className={`badge badge-dark`}>
                             {item['info']?.tokenId.slice(0, 6)}...{item['info']?.tokenId.slice(62)}
                           </span>
@@ -368,14 +371,17 @@ function Admin() {
                   Referral fee:
                   <input type="text" name="referralFee" placeholder="Price" defaultValue={0} required />
                 </div>
+                {!isApproved && (
+                  <button type={`button`} className="mt-20 btn" onClick={(e) => chkApprove(e)} disabled={tokenIds.length === 0}>
+                    Approve
+                  </button>
+                )}
 
-                <button className="mt-20 btn" type="submit" disabled={tokenIds.length === 0}>
-                  Approve
-                </button>
-
-                <button className="mt-20 btn" type="submit" disabled={!isApproved}>
-                  List
-                </button>
+                {isApproved && (
+                  <button className="mt-20 btn" type="submit">
+                    List
+                  </button>
+                )}
               </form>
             </div>
           </div>
