@@ -33,7 +33,7 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         bool status; // True: for sale | False: sold out and wait for new listing from the new owner
     }
 
-    mapping(address collection => mapping(bytes32 tokenId => ListingStruct)) public listingPool;
+    mapping(address => mapping(bytes32 => ListingStruct)) public listingPool;
 
     struct UserListingStruct {
         address collection;
@@ -94,18 +94,20 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         return (userListingPool[_seller].length, userListingPool[_seller]);
     }
 
-    function getTradePool(address _collection, bytes32 _tokenId) public view returns (TradeStruct[] memory) {
+    function getTradePool(address _collection, bytes32 _tokenId) public view returns (TradeStruct[] memory, uint256 index) {
         uint256 totaShop = _tradeCounter.current();
         TradeStruct[] memory result = new TradeStruct[](1);
 
+        uint256 foundedIndex;
         for (uint256 i = 0; i < totaShop; i++) {
             bytes32 itemId = bytes32(i + 1);
             if (tradePool[itemId].collection == _collection && tradePool[itemId].tokenId == _tokenId) {
                 result[0] = TradeStruct(tradePool[itemId].collection, tradePool[itemId].tokenId, tradePool[itemId].token, tradePool[itemId].price, tradePool[itemId].from, tradePool[itemId].to, tradePool[itemId].referral, tradePool[itemId].referralFee, tradePool[itemId].dt);
+                foundedIndex = i;
             }
         }
 
-        return result;
+        return (result, foundedIndex);
     }
 
     // Is listed?
@@ -113,7 +115,6 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         return listingPool[_collection][_tokenId].status;
     }
 
-    // collection: 0x565BD1C5C443BC2F1C2aE6Fe06Ed0ee1ef08141D
     // tokenId: 0x0000000000000000000000000000000000000000000000000000000000000001
     // Token : 0x0000000000000000000000000000000000000000
     // Price: 1000000000000000000  = 1 ether
@@ -150,6 +151,47 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         // userListingPool[_msgSender()].push(UserListingStruct(_collection, _tokenId, _token, _price, block.timestamp));
         //how about update/ re add
         emit NewTokenListed(_collection, _tokenId, _token, _price, _msgSender(), block.timestamp, true);
+        return true;
+    }
+
+    ///@notice Update
+    ///@dev Update market item
+    function update(
+        address _collection,
+        bytes32 _tokenId,
+        address _token,
+        uint256 _price,
+        uint8 _referralFee
+    ) public whenNotPaused returns (bool) {
+        ILSP8 COLLECTION = ILSP8(_collection);
+
+        // Check owner of token
+        if (COLLECTION.tokenOwnerOf(_tokenId) != _msgSender()) revert Unauthorized();
+
+        // Make this contract an operator (authorizeOperator) so this contrct can transfer token to the buyer
+        if (!COLLECTION.isOperatorFor(address(this), _tokenId)) revert NotOperator(address(this));
+
+        require(_referralFee < 100 - fee, "Referral fee must be lower than platform fee");
+
+        // Check duplicated listing: No need, this will update the item
+        // if (listingPool[_collection][_tokenId].status) revert DuplicatedListing(_collection, _tokenId);
+
+        //ILSP8(_collection).getOperatorsOf(_tokenId)
+        listingPool[_collection][_tokenId] = ListingStruct(_token, _price, _referralFee, block.timestamp, true);
+
+        // Update user listing pool
+        //userListingPool[_msgSender()].push(UserListingStruct(_collection, _tokenId, _token, _price, _referralFee, block.timestamp, true));
+        
+        for (uint256 i = 0; i < userListingPool[_msgSender()].length; i++) {
+            if (userListingPool[_msgSender()][i].collection == _collection && userListingPool[_msgSender()][i].tokenId == _tokenId) {
+                userListingPool[_msgSender()][i] = UserListingStruct(_collection, _tokenId, _token, _price, _referralFee, block.timestamp, true);
+            }
+        }
+
+        // user listing pool
+        // userListingPool[_msgSender()].push(UserListingStruct(_collection, _tokenId, _token, _price, block.timestamp));
+        //how about update/ re add
+        emit TokenUpdated(_collection, _tokenId, _token, _price, _msgSender(), block.timestamp, true);
         return true;
     }
 
@@ -279,7 +321,7 @@ contract UniTrade is Ownable(msg.sender), Pausable {
 
         // Transfer
         transferToken(_collection, _tokenId, _force, _data);
-        
+
         listingPool[_collection][_tokenId] = ListingStruct(address(0), 0, 0, block.timestamp, false);
         // ToDo: reset authorizedOperator: not sure the transfer function does that
 

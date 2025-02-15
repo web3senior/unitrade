@@ -579,6 +579,11 @@
 						"internalType": "struct UniTrade.TradeStruct[]",
 						"name": "",
 						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -651,12 +656,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "collection",
+						"name": "",
 						"type": "address"
 					},
 					{
 						"internalType": "bytes32",
-						"name": "tokenId",
+						"name": "",
 						"type": "bytes32"
 					}
 				],
@@ -865,6 +870,45 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_referralFee",
+						"type": "uint8"
+					}
+				],
+				"name": "update",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint8",
 						"name": "_fee",
 						"type": "uint8"
@@ -1041,6 +1085,9 @@
 				"transferOwnership(address)": {
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
 				},
+				"update(address,bytes32,address,uint256,uint8)": {
+					"details": "Update market item"
+				},
 				"updateFee(uint8)": {
 					"details": "Fee can be 0-100",
 					"params": {
@@ -1080,6 +1127,9 @@
 				},
 				"unpause()": {
 					"notice": "Unpause mint"
+				},
+				"update(address,bytes32,address,uint256,uint8)": {
+					"notice": "Update"
 				},
 				"updateFee(uint8)": {
 					"notice": "Update fee"
@@ -1216,11 +1266,11 @@
 			]
 		},
 		"UniTrade.sol": {
-			"keccak256": "0x71a747bb4c7dbc0340085794bb179d2fbdb844ce3e5779e671fc80288f0953da",
+			"keccak256": "0xbc85a3409742f87a2ab7d439e9898f2c31ca28342e24cf2a8706867958c0893b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d8d1d7740871e8cb7921639ef58577e7726edd8c54d45451dcc99ab059eb4029",
-				"dweb:/ipfs/QmPZZbWuCwjUc3pFSXMqCr4zkiGpeEJXayXy3Zuge1viLQ"
+				"bzz-raw://e7daf5da41002aea5aa0955affb9729da717f5160375dd202755b9373d7c4aba",
+				"dweb:/ipfs/Qmbh9MC6ALYBjNVcvCmCp4GTbrNJohBJM476jqujGCZK8P"
 			]
 		},
 		"_errors.sol": {
