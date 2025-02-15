@@ -165,7 +165,7 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         if (COLLECTION.tokenOwnerOf(_tokenId) != _msgSender()) revert Unauthorized();
 
         // Check if the token id is listed and the status is true
-        require(listingPool[_collection][_tokenId].status, "The entered tokenId is not listed.cancel.");
+        require(listingPool[_collection][_tokenId].status, "The entered tokenId is not listed.");
 
         //ILSP8(_collection).getOperatorsOf(_tokenId)
         listingPool[_collection][_tokenId] = ListingStruct(address(0), 0, 0, block.timestamp, false);
@@ -279,7 +279,8 @@ contract UniTrade is Ownable(msg.sender), Pausable {
 
         // Transfer
         transferToken(_collection, _tokenId, _force, _data);
-
+        
+        listingPool[_collection][_tokenId] = ListingStruct(address(0), 0, 0, block.timestamp, false);
         // ToDo: reset authorizedOperator: not sure the transfer function does that
 
         // Log
