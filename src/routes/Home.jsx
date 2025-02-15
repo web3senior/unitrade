@@ -268,7 +268,7 @@ function Home() {
 
                 {isApproved && (
                   <button className="mt-20 btn" type="submit" onClick={(e) => buy(e, token.info)}>
-                    List
+                    Buy now
                   </button>
                 )}
             </div>
