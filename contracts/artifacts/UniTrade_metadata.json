@@ -1339,11 +1339,11 @@
 			]
 		},
 		"UniTrade.sol": {
-			"keccak256": "0x38563a89c300a842e3388be31c5054b86145ed90d6b13403e81d52394ceea351",
+			"keccak256": "0x576ab0f63e9258ed72be6c242fc7df4a45d5f18ce90c070a35bad97ed1c53bca",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://86d3da7374c3023941a3cb936f1ede12597fd48334c0e21f66206f57c558f223",
-				"dweb:/ipfs/QmR46e47ck2eqBP7KmTUmtPrkQyPxjrDdWpjQSFhhB8Ytc"
+				"bzz-raw://f81e43b40f5e30028d6a88fe3d0e28f8b9fcaab60567ae637966020b3a62bde5",
+				"dweb:/ipfs/QmbwckAvnF8s3w5B5cqojrSUDoezr4ttSJZL3NUq56NsTs"
 			]
 		},
 		"_errors.sol": {

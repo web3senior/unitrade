@@ -181,7 +181,7 @@ contract UniTrade is Ownable(msg.sender), Pausable {
 
         // Update user listing pool
         //userListingPool[_msgSender()].push(UserListingStruct(_collection, _tokenId, _token, _price, _referralFee, block.timestamp, true));
-        
+
         for (uint256 i = 0; i < userListingPool[_msgSender()].length; i++) {
             if (userListingPool[_msgSender()][i].collection == _collection && userListingPool[_msgSender()][i].tokenId == _tokenId) {
                 userListingPool[_msgSender()][i] = UserListingStruct(_collection, _tokenId, _token, _price, _referralFee, block.timestamp, true);
@@ -228,18 +228,15 @@ contract UniTrade is Ownable(msg.sender), Pausable {
     function deleteListing(address _collection, bytes32 _tokenId) public whenNotPaused returns (bool) {
         ILSP8 COLLECTION = ILSP8(_collection);
 
-        // Check if the token id is listed and the status is true
-        require(!listingPool[_collection][_tokenId].status, "You need to cancel the item instead of deleting.");
-
         // Remove from user listing pool
-        for (uint256 i = 0; i < userListingPool[_msgSender()].length - 1; i++) {
+        for (uint256 i = 0; i < userListingPool[_msgSender()].length; i++) {
             if (userListingPool[_msgSender()][i].collection == _collection && userListingPool[_msgSender()][i].tokenId == _tokenId) {
-                userListingPool[_msgSender()][i] = userListingPool[_msgSender()][i + 1];
+               if (userListingPool[_msgSender()].length > 1) userListingPool[_msgSender()][i] = userListingPool[_msgSender()][i + 1];
             }
         }
-        userListingPool[COLLECTION.tokenOwnerOf(_tokenId)].pop();
+        userListingPool[_msgSender()].pop();
 
-        return true;
+      return true;
     }
 
     /// @notice Calculate fees
@@ -305,7 +302,7 @@ contract UniTrade is Ownable(msg.sender), Pausable {
                 // transferToken(_collection, _tokenId, _force, _data);
             } else {
                 uint256 authorizedAmount = ILSP7(item.token).authorizedAmountFor(address(this), _msgSender());
-                if (authorizedAmount < item.price) revert NotAuthorizedAmount(item.price, authorizedAmount);
+                if (authorizedAmount != item.price) revert NotAuthorizedAmount(item.price, authorizedAmount);
 
                 // Owner of the token
                 uint256[3] memory fees = calcFee(_collection, _tokenId);
