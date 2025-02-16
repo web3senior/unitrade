@@ -28,8 +28,8 @@ function Home() {
 
   const chkApproveLSP7 = async (e, tokenInfo) => {
     const contractLSP7 = new web3.eth.Contract(LSP7ABI, tokenInfo.token)
-    const isAuthorizedOperator = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenInfo.price, '0x').call()
-    if (isAuthorizedOperator) {
+    const authorizedAmount = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenInfo.price, '0x').call()
+    if (authorizedAmount >= tokenInfo.price) {
       setIsApproved(true)
       toast.success(`It's approved already!`)
     } else {
