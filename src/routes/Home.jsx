@@ -35,7 +35,7 @@ function Home() {
     } else {
       e.target.innerHTML = `Please wait...`
       const t = toast.loading(`Waiting for transaction's confirmation`)
-      const authResult = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, price, '0x').send({ from: auth.accounts[0] })
+      const authResult = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenInfo.price, '0x').send({ from: auth.accounts[0] })
       toast.dismiss(t)
       e.target.innerHTML = `Approve`
     }
