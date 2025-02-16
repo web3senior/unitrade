@@ -27,8 +27,9 @@ function Home() {
   const getAllUserReaction = async () => await contractReadOnly.methods.getAllUserReaction(`${auth.contextAccounts[0]}`).call()
 
   const chkApproveLSP7 = async (e, tokenInfo) => {
-    const contractLSP7 = new web3.eth.Contract(LSP7ABI, tokenInfo.token)
-    const authorizedAmount = await contractLSP7.methods.authorizeOperator(import.meta.env.VITE_CONTRACT, tokenInfo.price, '0x').call()
+    const contractLSP7 = new web3.eth.Contract(LSP7ABI, tokenInfo.token.toLowerCase())
+    console.log(contractLSP7)
+    const authorizedAmount = await contractLSP7.methods.authorizedAmountFor(import.meta.env.VITE_CONTRACT,  auth.accounts[0]).call()
     if (authorizedAmount >= tokenInfo.price) {
       setIsApproved(true)
       toast.success(`It's approved already!`)
