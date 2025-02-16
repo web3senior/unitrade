@@ -45,23 +45,42 @@ function Home() {
     const t = toast.loading(`Waiting for transaction's confirmation`)
 
     // List token
-    contract.methods
-      .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, _.toHex(0))
-      .send({
-        from: auth.accounts[0],
-        value: tokenInfo.price
-      })
-      .then((res) => {
-        console.log(res) //res.events.tokenId
+if (tokenInfo.token.toLowerCase() === `0x0000000000000000000000000000000000000000`) {
+  contract.methods
+  .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, _.toHex(0))
+  .send({
+    from: auth.accounts[0],
+    value: tokenInfo.price
+  })
+  .then((res) => {
+    console.log(res) //res.events.tokenId
 
-        setIsLoading(true)
+    setIsLoading(true)
 
-        toast.success(`Done`)
-        toast.dismiss(t)
-      })
-      .catch((error) => {
-        toast.dismiss(t)
-      })
+    toast.success(`Done`)
+    toast.dismiss(t)
+  })
+  .catch((error) => {
+    toast.dismiss(t)
+  })
+}else {
+  contract.methods
+  .buy(searchParams.get(`collection`), searchParams.get(`token_id`), `${auth.contextAccounts[0]}`, true, _.toHex(0))
+  .send({
+    from: auth.accounts[0]
+  })
+  .then((res) => {
+    console.log(res) //res.events.tokenId
+
+    setIsLoading(true)
+
+    toast.success(`Done`)
+    toast.dismiss(t)
+  })
+  .catch((error) => {
+    toast.dismiss(t)
+  })
+}
   }
   async function getTokenData(collection, tokenId) {
     collection = collection.toString().toLowerCase()
