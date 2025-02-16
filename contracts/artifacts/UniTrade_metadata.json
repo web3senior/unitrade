@@ -476,6 +476,30 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_collection",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_tokenId",
+						"type": "bytes32"
+					}
+				],
+				"name": "deleteListing",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "fee",
 				"outputs": [
@@ -1315,11 +1339,11 @@
 			]
 		},
 		"UniTrade.sol": {
-			"keccak256": "0xa53b4a01458ce6d1b843428bd27f4439f8c9d61552b178be2372858ffdaf39d7",
+			"keccak256": "0x38563a89c300a842e3388be31c5054b86145ed90d6b13403e81d52394ceea351",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c175ff5c391b1f9c0b4ca5b5788b93cd98e24d563ae3dad886081cc1f219456a",
-				"dweb:/ipfs/QmU1WkNxNPCtWcXBrmQMYJNhY8KGrGGzz8wYSxTdvAedQF"
+				"bzz-raw://86d3da7374c3023941a3cb936f1ede12597fd48334c0e21f66206f57c558f223",
+				"dweb:/ipfs/QmR46e47ck2eqBP7KmTUmtPrkQyPxjrDdWpjQSFhhB8Ytc"
 			]
 		},
 		"_errors.sol": {

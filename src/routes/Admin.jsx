@@ -162,7 +162,7 @@ function Admin() {
 
     // window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
     // Approve tokenId
-console.log(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
+    console.log(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
     // List token
     const listResult = await contract.methods.update(collection, tokenId, token, _.toWei(price, `ether`), referralFee).send({ from: auth.accounts[0] })
     console.log(listResult) //res.events.tokenId
@@ -201,7 +201,36 @@ console.log(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
       toast.dismiss(t)
     }
   }
+  const deleteListing = async (e, item) => {
+    console.log(item)
 
+    const t = toast.loading(`Waiting for transaction's confirmation`)
+
+    try {
+      window.lukso.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+        // Cancel listing
+        contract.methods
+          .deleteListing(item.collection, item.tokenId)
+          .send({
+            from: accounts[0],
+          })
+          .then((res) => {
+            console.log(res) //res.events.tokenId
+
+            setIsLoading(true)
+
+            toast.success(`Done`)
+            toast.dismiss(t)
+          })
+          .catch((error) => {
+            toast.dismiss(t)
+          })
+      })
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(t)
+    }
+  }
   const updateItem = (e, info) => {
     setUpdate(true)
     console.log(info, info['token'].toLowerCase())
@@ -401,9 +430,20 @@ console.log(collection, tokenId, token, _.toWei(price, `ether`), referralFee)
                         </td>
 
                         <td className={`d-flex flex-column grid--gap-025`}>
-                          <button className={`btn`} onClick={(e) => cancelListing(e, item['info'])}>
-                            Delete
-                          </button>
+                          {item['market']?.status ? (
+                            <>
+                              <button className={`btn`} onClick={(e) => cancelListing(e, item['info'])}>
+                                Cancel listing
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button className={`btn`} onClick={(e) => deleteListing(e, item['info'])}>
+                                Delete
+                              </button>
+                            </>
+                          )}
+
                           <button className={`btn`} style={{ background: `orange` }} onClick={(e) => updateItem(e, item['info'])}>
                             Update
                           </button>

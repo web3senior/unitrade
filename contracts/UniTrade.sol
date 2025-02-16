@@ -225,6 +225,23 @@ contract UniTrade is Ownable(msg.sender), Pausable {
         return true;
     }
 
+    function deleteListing(address _collection, bytes32 _tokenId) public whenNotPaused returns (bool) {
+        ILSP8 COLLECTION = ILSP8(_collection);
+
+        // Check if the token id is listed and the status is true
+        require(!listingPool[_collection][_tokenId].status, "You need to cancel the item instead of deleting.");
+
+        // Remove from user listing pool
+        for (uint256 i = 0; i < userListingPool[_msgSender()].length - 1; i++) {
+            if (userListingPool[_msgSender()][i].collection == _collection && userListingPool[_msgSender()][i].tokenId == _tokenId) {
+                userListingPool[_msgSender()][i] = userListingPool[_msgSender()][i + 1];
+            }
+        }
+        userListingPool[COLLECTION.tokenOwnerOf(_tokenId)].pop();
+
+        return true;
+    }
+
     /// @notice Calculate fees
     function calcFee(address _collection, bytes32 _tokenId) public view returns (uint256[3] memory) {
         ListingStruct memory item = listingPool[_collection][_tokenId];
